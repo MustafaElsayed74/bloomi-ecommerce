@@ -1,0 +1,19 @@
+<div class="login-container">
+    <div class="login-box">
+        <h1>Sign In to Your Account</h1>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+
+        <div id="google-signin-button" class="google-button-container"></div>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <p class="signup-prompt">
+            Don't have an account? <a href="#signup">Create one now</a>
+        </p>
+    </div>
+</div>

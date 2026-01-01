@@ -1,0 +1,32 @@
+<header>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a routerLink="/products" class="logo">🌸 Bloomi Store</a>
+            </div>
+            <ul class="navbar-menu">
+                <li><a routerLink="/products" class="nav-link">Shop</a></li>
+                <li><a routerLink="/cart" class="nav-link">
+                        Cart
+                        <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+                    </a></li>
+                <li class="auth-menu">
+                    <ng-container *ngIf="(isAuthenticated$ | async) as isAuth">
+                        <ng-container *ngIf="isAuth; else loginButton">
+                            <div class="user-info">
+                                <div *ngIf="currentUser$ | async as user" class="user-profile">
+                                    <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
+                                    <span class="user-name">{{ user.name }}</span>
+                                </div>
+                                <button (click)="logout()" class="logout-btn">Logout</button>
+                            </div>
+                        </ng-container>
+                        <ng-template #loginButton>
+                            <a routerLink="/login" class="login-link">Login</a>
+                        </ng-template>
+                    </ng-container>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

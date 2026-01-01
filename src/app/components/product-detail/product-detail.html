@@ -1,0 +1,45 @@
+<div class="container">
+    <a routerLink="/products" class="back-link">← Back to Products</a>
+
+    <div *ngIf="loading" class="loading">
+        Loading product details...
+    </div>
+
+    <div *ngIf="!loading && product" class="product-detail">
+        <div class="product-image">
+            <img [src]="product.imageUrl" [alt]="product.name" />
+        </div>
+
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
+            <p class="category">Category: {{ product.category }}</p>
+            <div class="rating">⭐ {{ product.rating }} / 5</div>
+
+            <p class="description">{{ product.description }}</p>
+
+            <div class="price-section">
+                <span class="price">${{ product.price.toFixed(2) }}</span>
+                <span class="stock" [ngClass]="{ 'out-of-stock': product.stock === 0 }">
+                    {{ product.stock > 0 ? 'In Stock (' + product.stock + ')' : 'Out of Stock' }}
+                </span>
+            </div>
+
+            <div *ngIf="product.stock > 0" class="add-to-cart">
+                <div class="quantity-selector">
+                    <button (click)="decreaseQuantity()" class="qty-btn">-</button>
+                    <input type="number" [(ngModel)]="quantity" min="1" [max]="product.stock" readonly />
+                    <button (click)="increaseQuantity()" class="qty-btn">+</button>
+                </div>
+                <button (click)="addToCart()" class="btn btn-primary">Add to Cart</button>
+            </div>
+
+            <div *ngIf="product.stock === 0" class="out-of-stock-message">
+                This product is currently out of stock
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!loading && !product" class="error">
+        Product not found
+    </div>
+</div>

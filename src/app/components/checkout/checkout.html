@@ -1,0 +1,51 @@
+<div class="container">
+    <h1>Checkout</h1>
+
+    <div class="checkout-content">
+        <div class="checkout-form">
+            <h2>Shipping Information</h2>
+            <form (ngSubmit)="submitOrder()">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" [(ngModel)]="order.customerName" name="customerName" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" [(ngModel)]="order.customerEmail" name="customerEmail" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Shipping Address *</label>
+                    <textarea id="address" [(ngModel)]="order.shippingAddress" name="shippingAddress" rows="4"
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="loading">
+                    {{ loading ? 'Processing...' : 'Place Order' }}
+                </button>
+            </form>
+
+            <div class="payment-section">
+                <h2>Payment</h2>
+                <p class="payment-info">Click "Pay with Stripe" to proceed to secure payment</p>
+                <button type="button" class="btn btn-stripe" (click)="proceedToPayment()" [disabled]="paymentLoading">
+                    {{ paymentLoading ? 'Loading...' : '💳 Pay with Stripe' }}
+                </button>
+            </div>
+        </div>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-items">
+                <div *ngFor="let item of cartItems" class="summary-item-row">
+                    <span>{{ item.product?.name }} x {{ item.quantity }}</span>
+                    <span>${{ ((item.product?.price || 0) * item.quantity).toFixed(2) }}</span>
+                </div>
+            </div>
+            <div class="summary-total">
+                <strong>Total: ${{ total.toFixed(2) }}</strong>
+            </div>
+        </div>
+    </div>
+</div>
