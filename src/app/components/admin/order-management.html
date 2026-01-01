@@ -1,0 +1,180 @@
+<div class="management-container">
+    <div class="management-header">
+        <div>
+            <h1>Order Management</h1>
+            <p class="subtitle">View and manage customer orders</p>
+        </div>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+        <span>✓ {{ successMessage }}</span>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-error">
+        <span>⚠️ {{ errorMessage }}</span>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading orders...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="management-content">
+        <!-- Order Details Modal -->
+        <div *ngIf="showOrderDetails && selectedOrder" class="modal-overlay" (click)="closeOrderDetails()">
+            <div class="modal-content order-details-modal" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h2>Order #{{ selectedOrder.orderNumber }}</h2>
+                    <button class="modal-close" (click)="closeOrderDetails()">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="order-status-card">
+                        <span class="status-badge" [class]="getStatusColor(selectedOrder.status)">
+                            {{ getStatusLabel(selectedOrder.status) }}
+                        </span>
+                        <p class="order-id">ID: {{ selectedOrder.id }}</p>
+                    </div>
+
+                    <div class="order-info-grid">
+                        <div class="info-item">
+                            <label>Order Number</label>
+                            <p>{{ selectedOrder.orderNumber }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Order Date</label>
+                            <p>{{ formatDate(selectedOrder.createdAt) }} at {{ formatTime(selectedOrder.createdAt) }}
+                            </p>
+                        </div>
+                        <div class="info-item">
+                            <label>Total Amount</label>
+                            <p class="amount">${{ selectedOrder.totalAmount | number: '1.2-2' }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Customer Name</label>
+                            <p>{{ selectedOrder.customerName || 'N/A' }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Customer Email</label>
+                            <p>{{ selectedOrder.customerEmail || 'N/A' }}</p>
+                        </div>
+                        <div class="info-item">
+                            <label>Items Count</label>
+                            <p>{{ selectedOrder.items?.length || 0 }} item{{ (selectedOrder.items?.length || 0) !== 1 ?
+                                's' : '' }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="order-items" *ngIf="selectedOrder.items && selectedOrder.items.length > 0">
+                        <h3>Order Items</h3>
+                        <div class="items-list">
+                            <div class="item-row" *ngFor="let item of selectedOrder.items">
+                                <div class="item-name">{{ item.productName }}</div>
+                                <div class="item-qty">Qty: {{ item.quantity }}</div>
+                                <div class="item-price">${{ item.price | number: '1.2-2' }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Update -->
+                    <div class="status-update-section">
+                        <h3>Update Order Status</h3>
+                        <div class="status-options">
+                            <button *ngFor="let status of getAvailableStatuses(selectedOrder.status)" class="status-btn"
+                                [class.active]="status.value === selectedOrder.status" [class]="status.color"
+                                (click)="updateOrderStatus(status.value)"
+                                [disabled]="status.value === selectedOrder.status || updatingStatus">
+                                {{ status.label }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" (click)="closeOrderDetails()">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Search by order number, customer name, or email..."
+                    [(ngModel)]="searchTerm" (input)="searchOrders()" class="search-input" />
+            </div>
+            <div class="status-filter">
+                <label for="status-select">Filter by Status:</label>
+                <select id="status-select" [(ngModel)]="statusFilter" (change)="onStatusFilterChange()"
+                    class="filter-select">
+                    <option value="all">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <span class="result-count">{{ filteredOrders.length }} order{{ filteredOrders.length !== 1 ? 's' : ''
+                }}</span>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="table-section">
+            <div class="table-container">
+                <table class="orders-table" *ngIf="filteredOrders.length > 0; else noOrders">
+                    <thead>
+                        <tr>
+                            <th class="col-number">Order #</th>
+                            <th class="col-customer">Customer</th>
+                            <th class="col-amount">Amount</th>
+                            <th class="col-status">Status</th>
+                            <th class="col-date">Date</th>
+                            <th class="col-items">Items</th>
+                            <th class="col-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of filteredOrders">
+                            <td class="col-number">
+                                <span class="order-number">#{{ order.orderNumber }}</span>
+                            </td>
+                            <td class="col-customer">
+                                <div class="customer-info">
+                                    <p class="customer-name">{{ order.customerName || 'Unknown' }}</p>
+                                    <span class="customer-email">{{ order.customerEmail || 'N/A' }}</span>
+                                </div>
+                            </td>
+                            <td class="col-amount">
+                                <span class="amount-badge">${{ order.totalAmount | number: '1.2-2' }}</span>
+                            </td>
+                            <td class="col-status">
+                                <span class="status-badge" [class]="getStatusColor(order.status)">
+                                    {{ getStatusLabel(order.status) }}
+                                </span>
+                            </td>
+                            <td class="col-date">
+                                <div class="date-info">
+                                    <p>{{ formatDate(order.createdAt) }}</p>
+                                    <span class="time">{{ formatTime(order.createdAt) }}</span>
+                                </div>
+                            </td>
+                            <td class="col-items">
+                                <span class="items-count">{{ order.items?.length || 0 }}</span>
+                            </td>
+                            <td class="col-actions">
+                                <button class="action-view" (click)="viewOrderDetails(order)" title="View Details">
+                                    👁️
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #noOrders>
+                    <div class="empty-state">
+                        <p>{{ searchTerm || statusFilter !== 'all' ? 'No orders found matching your filters' : 'No
+                            orders yet' }}</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

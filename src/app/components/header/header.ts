@@ -15,6 +15,7 @@ export class Header implements OnInit {
   cartItemCount = 0;
   isAuthenticated$;
   currentUser$;
+  isAdmin = false;
 
   constructor(
     private cartService: CartService,
@@ -29,6 +30,25 @@ export class Header implements OnInit {
     this.cartService.getCart().subscribe(items => {
       this.cartItemCount = this.cartService.getCartItemCount();
     });
+
+    // Check if user is admin by decoding JWT token
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.isAdmin = this.decodeAndCheckIsAdmin(token);
+      console.log('[Header] isAdmin:', this.isAdmin);
+    }
+  }
+
+  private decodeAndCheckIsAdmin(token: string): boolean {
+    try {
+      const payload = token.split('.')[1];
+      const decoded = JSON.parse(atob(payload));
+      console.log('[Header] Decoded token:', decoded);
+      return decoded.IsAdmin === 'True' || decoded.IsAdmin === 'true' || decoded.IsAdmin === true || decoded.IsAdmin === 1;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return false;
+    }
   }
 
   logout(): void {
@@ -36,3 +56,4 @@ export class Header implements OnInit {
     this.router.navigate(['/login']);
   }
 }
+

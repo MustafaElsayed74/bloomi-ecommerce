@@ -1,0 +1,129 @@
+<div class="admin-container">
+    <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <p class="subtitle">Manage products, users, and orders</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-error">
+        <span>⚠️ {{ errorMessage }}</span>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading dashboard...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="admin-content">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon products-icon">📦</div>
+                <div class="stat-info">
+                    <h3>Total Products</h3>
+                    <p class="stat-value">{{ stats.totalProducts }}</p>
+                </div>
+                <button class="stat-btn" (click)="navigateToProducts()">Manage</button>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon users-icon">👥</div>
+                <div class="stat-info">
+                    <h3>Total Users</h3>
+                    <p class="stat-value">{{ stats.totalUsers }}</p>
+                </div>
+                <button class="stat-btn" (click)="navigateToUsers()">Manage</button>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orders-icon">📋</div>
+                <div class="stat-info">
+                    <h3>Total Orders</h3>
+                    <p class="stat-value">{{ stats.totalOrders }}</p>
+                </div>
+                <button class="stat-btn" (click)="navigateToOrders()">View</button>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon revenue-icon">💰</div>
+                <div class="stat-info">
+                    <h3>Total Revenue</h3>
+                    <p class="stat-value">${{ stats.totalRevenue | number: '1.2-2' }}</p>
+                </div>
+                <button class="stat-btn disabled">View</button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="admin-nav">
+            <button class="nav-btn" [class.active]="activeTab === 'overview'" (click)="setActiveTab('overview')">
+                📊 Overview
+            </button>
+            <button class="nav-btn" [class.active]="activeTab === 'products'" (click)="setActiveTab('products')">
+                📦 Products
+            </button>
+            <button class="nav-btn" [class.active]="activeTab === 'users'" (click)="setActiveTab('users')">
+                👥 Users
+            </button>
+            <button class="nav-btn" [class.active]="activeTab === 'orders'" (click)="setActiveTab('orders')">
+                📋 Orders
+            </button>
+        </div>
+
+        <!-- Recent Orders Section -->
+        <div class="section" *ngIf="activeTab === 'overview'">
+            <h2>Recent Orders</h2>
+            <div class="table-container">
+                <table class="admin-table" *ngIf="stats.recentOrders.length > 0; else noOrders">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of stats.recentOrders">
+                            <td class="order-number">#{{ order.orderNumber }}</td>
+                            <td class="amount">${{ order.totalAmount | number: '1.2-2' }}</td>
+                            <td>
+                                <span class="status-badge" [class]="'status-' + order.status">
+                                    {{ order.status | uppercase }}
+                                </span>
+                            </td>
+                            <td class="date">{{ order.createdAt | date: 'short' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #noOrders>
+                    <div class="empty-state">
+                        <p>No recent orders</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <!-- Quick Actions Section -->
+        <div class="section" *ngIf="activeTab === 'overview'">
+            <h2>Quick Actions</h2>
+            <div class="quick-actions">
+                <button class="action-btn primary" (click)="navigateToProducts()">
+                    <span class="icon">➕</span>
+                    Add New Product
+                </button>
+                <button class="action-btn secondary" (click)="navigateToOrders()">
+                    <span class="icon">📋</span>
+                    View All Orders
+                </button>
+                <button class="action-btn secondary" (click)="navigateToUsers()">
+                    <span class="icon">👥</span>
+                    View All Users
+                </button>
+                <button class="action-btn secondary" (click)="loadDashboardStats()">
+                    <span class="icon">🔄</span>
+                    Refresh Stats
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

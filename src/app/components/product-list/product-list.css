@@ -6,8 +6,13 @@
 
 h1 {
     text-align: center;
-    color: #333;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 2rem;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 .products-grid {
@@ -17,16 +22,19 @@ h1 {
 }
 
 .product-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
-    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(255, 107, 157, 0.2);
+    border-color: rgba(255, 107, 157, 0.3);
 }
 
 .product-image {
@@ -51,13 +59,15 @@ h1 {
 
 .product-info h3 {
     margin: 0 0 0.5rem;
-    color: #333;
+    color: #1f2937;
+    font-weight: 600;
 }
 
 .category {
-    color: #999;
+    color: #ff6b9d;
     font-size: 0.85rem;
     margin: 0.25rem 0;
+    font-weight: 500;
 }
 
 .description {
@@ -80,7 +90,10 @@ h1 {
 .price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #e63946;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .rating {
@@ -106,26 +119,30 @@ h1 {
 }
 
 .btn-primary {
-    background-color: #e63946;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     color: white;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-    background-color: #c21f2e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
 }
 
 .btn-primary:disabled {
-    background-color: #ccc;
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    color: white;
+    background-color: rgba(255, 107, 157, 0.1);
+    color: #ff6b9d;
+    border: 1px solid rgba(255, 107, 157, 0.3);
 }
 
 .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: rgba(255, 107, 157, 0.2);
+    border-color: #ff6b9d;
 }
 
 .loading,

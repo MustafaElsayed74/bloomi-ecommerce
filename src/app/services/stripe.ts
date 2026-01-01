@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root',
 })
 export class StripeService {
-    private apiUrl = 'https://localhost:7147/api/payment';
+    private apiUrl = 'http://localhost:5076/api/payment';
     private publishableKey = 'pk_test_51SkfI3AWkBaIhrjmair8ojlK19MrbWTTbSwTy31YOU5XYJKLKLXcJqqxzYiVMMBWlDkPJKYEhC4Qc1Qe6JEseji400jYUOyGe9';
 
     constructor(private http: HttpClient) { }
@@ -40,3 +40,4 @@ export interface CheckoutItem {
     price: number;
     quantity: number;
 }
+

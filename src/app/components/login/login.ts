@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
                 window.google.accounts.id.renderButton(buttonElement, {
                     theme: 'outline',
                     size: 'large',
-                    width: '100%'
+                    width: '400'
                 });
             }
         }
@@ -107,18 +107,23 @@ export class LoginComponent implements OnInit {
         }
 
         this.isLoading = true;
+        console.log('[LoginComponent] Attempting login with email:', this.email);
         this.authService.login(this.email, this.password).subscribe({
             next: (res) => {
-                if (res.success) {
+                console.log('[LoginComponent] Login response:', res);
+                if (res && res.success) {
+                    console.log('[LoginComponent] Login successful, navigating to home');
                     this.router.navigate(['/']);
                 } else {
-                    this.errorMessage = res.message || 'Login failed';
+                    console.log('[LoginComponent] Login failed with message:', res?.message);
+                    this.errorMessage = res?.message || 'Login failed';
                 }
                 this.isLoading = false;
             },
             error: (error) => {
-                console.error('Login error:', error);
-                this.errorMessage = 'Login failed. Please try again.';
+                console.error('[LoginComponent] Login error:', error);
+                const errorMessage = error?.error?.message || error?.message || 'Login failed. Please try again.';
+                this.errorMessage = errorMessage;
                 this.isLoading = false;
             }
         });
@@ -166,3 +171,4 @@ export class LoginComponent implements OnInit {
         this.confirmPassword = '';
     }
 }
+

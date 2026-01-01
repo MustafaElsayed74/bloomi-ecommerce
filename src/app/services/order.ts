@@ -7,7 +7,7 @@ import { Order } from '../models/ecommerce.model';
   providedIn: 'root',
 })
 export class OrderService {
-  private apiUrl = 'https://localhost:7147/api/orders';
+  private apiUrl = 'http://localhost:5076/api/orders';
 
   constructor(private http: HttpClient) { }
 
@@ -31,3 +31,4 @@ export class OrderService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
+

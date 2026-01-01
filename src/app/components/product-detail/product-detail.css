@@ -5,25 +5,29 @@
 }
 
 .back-link {
-    color: #e63946;
+    color: #ff6b9d;
     text-decoration: none;
     margin-bottom: 2rem;
     display: inline-block;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .back-link:hover {
-    color: #c21f2e;
+    color: #c44569;
+    transform: translateX(-4px);
 }
 
 .product-detail {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .product-image {
@@ -45,12 +49,16 @@
 
 .product-info h1 {
     margin: 0 0 1rem;
-    color: #333;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
 }
 
 .category {
-    color: #999;
+    color: #ff6b9d;
     margin: 0.5rem 0;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .rating {
@@ -78,20 +86,25 @@
 .price {
     font-size: 2rem;
     font-weight: bold;
-    color: #e63946;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stock {
     padding: 0.5rem 1rem;
-    background-color: #d4edda;
-    color: #155724;
-    border-radius: 4px;
-    font-weight: 500;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+    font-weight: 600;
 }
 
 .stock.out-of-stock {
-    background-color: #f8d7da;
-    color: #721c24;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    color: #991b1b;
+    border-color: rgba(239, 68, 68, 0.3);
 }
 
 .add-to-cart {
@@ -108,23 +121,26 @@
 .qty-btn {
     width: 40px;
     height: 40px;
-    border: 1px solid #ddd;
-    background: white;
+    border: 2px solid rgba(255, 107, 157, 0.3);
+    background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1.2rem;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+    color: #ff6b9d;
+    font-weight: 700;
 }
 
 .qty-btn:hover {
-    border-color: #e63946;
+    border-color: #ff6b9d;
+    background: rgba(255, 107, 157, 0.1);
 }
 
 .quantity-selector input {
     width: 60px;
     padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: 1px solid rgba(255, 107, 157, 0.2);
+    border-radius: 8px;
     text-align: center;
     font-size: 1rem;
 }
@@ -140,19 +156,22 @@
 }
 
 .btn-primary {
-    background-color: #e63946;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     color: white;
+    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
 }
 
 .btn-primary:hover {
-    background-color: #c21f2e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
 }
 
 .out-of-stock-message {
-    color: #721c24;
-    background-color: #f8d7da;
+    color: #991b1b;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    border: 1px solid rgba(239, 68, 68, 0.3);
     padding: 1rem;
-    border-radius: 4px;
+    border-radius: 8px;
     margin-top: 1rem;
 }
 

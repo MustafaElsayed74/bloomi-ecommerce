@@ -1,8 +1,10 @@
 footer {
-    background-color: #333;
+    background: linear-gradient(135deg, rgba(15, 12, 41, 0.98) 0%, rgba(48, 43, 99, 0.98) 100%);
+    backdrop-filter: blur(10px);
     color: white;
-    padding: 2rem 0 0;
+    padding: 3rem 0 0;
     margin-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-container {
@@ -16,7 +18,12 @@ footer {
 
 .footer-section h3 {
     margin-top: 0;
-    color: #e63946;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 16px;
 }
 
 .footer-section ul {
@@ -24,24 +31,31 @@ footer {
     padding: 0;
 }
 
+.footer-section li {
+    margin-bottom: 8px;
+}
+
 .footer-section a {
-    color: #bbb;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    font-size: 14px;
 }
 
 .footer-section a:hover {
-    color: #e63946;
+    color: #ff6b9d;
+    padding-left: 4px;
 }
 
 .footer-bottom {
-    background-color: #222;
-    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem 1rem;
     text-align: center;
-    border-top: 1px solid #444;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-bottom p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
 }

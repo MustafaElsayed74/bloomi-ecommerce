@@ -7,7 +7,7 @@ import { CartItem } from '../models/ecommerce.model';
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = 'https://localhost:7147/api/cart';
+  private apiUrl = 'http://localhost:5076/api/cart';
   private sessionId = this.getOrCreateSessionId();
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
 
@@ -63,3 +63,4 @@ export class CartService {
     return items.reduce((count, item) => count + item.quantity, 0);
   }
 }
+

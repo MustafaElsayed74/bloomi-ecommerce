@@ -21,3 +21,4 @@ describe('ProductList', () => {
     expect(component).toBeTruthy();
   });
 });
+

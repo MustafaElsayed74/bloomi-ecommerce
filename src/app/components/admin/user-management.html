@@ -1,0 +1,135 @@
+<div class="management-container">
+    <div class="management-header">
+        <div>
+            <h1>User Management</h1>
+            <p class="subtitle">View and manage user accounts</p>
+        </div>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+        <span>✓ {{ successMessage }}</span>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-error">
+        <span>⚠️ {{ errorMessage }}</span>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-container">
+        <div class="spinner"></div>
+        <p>Loading users...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="management-content">
+        <!-- User Details Modal -->
+        <div *ngIf="showUserDetails && selectedUser" class="modal-overlay" (click)="closeUserDetails()">
+            <div class="modal-content user-details-modal" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h2>User Details</h2>
+                    <button class="modal-close" (click)="closeUserDetails()">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="user-avatar">
+                        {{ getInitials(selectedUser.name) }}
+                    </div>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <label>Name</label>
+                            <p>{{ selectedUser.name }}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Email</label>
+                            <p>{{ selectedUser.email }}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Member Since</label>
+                            <p>{{ formatDate(selectedUser.createdAt) }}</p>
+                            <span class="meta">{{ getAccountAge(selectedUser.createdAt) }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Last Login</label>
+                            <p>{{ selectedUser.lastLogin ? formatDate(selectedUser.lastLogin) : 'Never' }}</p>
+                        </div>
+                        <div class="detail-item">
+                            <label>Total Orders</label>
+                            <p class="stat-value">{{ selectedUser.orderCount || 0 }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" (click)="closeUserDetails()">Close</button>
+                    <button class="btn-danger" (click)="deleteUser(selectedUser.id)">
+                        🗑️ Delete User
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-section">
+            <input type="text" placeholder="Search users by email or name..." [(ngModel)]="searchTerm"
+                (input)="searchUsers()" class="search-input" />
+            <span class="search-count">{{ filteredUsers.length }} user{{ filteredUsers.length !== 1 ? 's' : '' }}</span>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-section">
+            <div class="table-container">
+                <table class="users-table" *ngIf="filteredUsers.length > 0; else noUsers">
+                    <thead>
+                        <tr>
+                            <th class="col-user">User</th>
+                            <th class="col-email">Email</th>
+                            <th class="col-joined">Member Since</th>
+                            <th class="col-login">Last Login</th>
+                            <th class="col-orders">Orders</th>
+                            <th class="col-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of filteredUsers">
+                            <td class="col-user">
+                                <div class="user-cell">
+                                    <div class="user-avatar-small">
+                                        {{ getInitials(user.name) }}
+                                    </div>
+                                    <div>
+                                        <p class="user-name">{{ user.name }}</p>
+                                        <span class="user-meta">ID: {{ user.id }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-email">{{ user.email }}</td>
+                            <td class="col-joined">
+                                <div class="date-cell">
+                                    <p>{{ formatDate(user.createdAt) }}</p>
+                                    <span class="meta">{{ getAccountAge(user.createdAt) }}</span>
+                                </div>
+                            </td>
+                            <td class="col-login">
+                                <span class="status-badge" [class.online]="user.lastLogin">
+                                    {{ user.lastLogin ? formatDate(user.lastLogin) : 'Never' }}
+                                </span>
+                            </td>
+                            <td class="col-orders">
+                                <span class="order-count">{{ user.orderCount || 0 }}</span>
+                            </td>
+                            <td class="col-actions">
+                                <button class="action-view" (click)="viewUserDetails(user)" title="View Details">
+                                    👁️
+                                </button>
+                                <button class="action-delete" (click)="deleteUser(user.id)" title="Delete User">
+                                    🗑️
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ng-template #noUsers>
+                    <div class="empty-state">
+                        <p>{{ searchTerm ? 'No users found matching your search' : 'No users yet' }}</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -47,9 +47,16 @@ export class ShoppingCart implements OnInit {
 
   removeItem(id: number | undefined): void {
     if (id) {
-      this.cartService.removeFromCart(id).subscribe(
-        () => this.loadCart()
-      );
+      console.log('[ShoppingCart] Removing item with id:', id);
+      this.cartService.removeFromCart(id).subscribe({
+        next: () => {
+          console.log('[ShoppingCart] Item removed successfully');
+          this.loadCart();
+        },
+        error: (err) => {
+          console.error('[ShoppingCart] Error removing item:', err);
+        }
+      });
     }
   }
 
@@ -57,3 +64,4 @@ export class ShoppingCart implements OnInit {
     // Navigate to checkout
   }
 }
+
