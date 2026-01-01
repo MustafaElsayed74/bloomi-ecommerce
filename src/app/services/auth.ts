@@ -40,6 +40,32 @@ export class AuthService {
         }
     }
 
+    signup(email: string, password: string, name: string): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, { email, password, name })
+            .pipe(
+                tap(response => {
+                    if (response.success) {
+                        localStorage.setItem('authToken', response.token);
+                        localStorage.setItem('currentUser', JSON.stringify(response.user));
+                        this.currentUserSubject.next(response.user);
+                    }
+                })
+            );
+    }
+
+    login(email: string, password: string): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
+            .pipe(
+                tap(response => {
+                    if (response.success) {
+                        localStorage.setItem('authToken', response.token);
+                        localStorage.setItem('currentUser', JSON.stringify(response.user));
+                        this.currentUserSubject.next(response.user);
+                    }
+                })
+            );
+    }
+
     googleLogin(idToken: string): Observable<AuthResponse> {
         return this.http.post<AuthResponse>(`${this.apiUrl}/google-login`, { idToken })
             .pipe(
