@@ -103,6 +103,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
 .profile-pic {
@@ -112,6 +122,12 @@
     object-fit: cover;
     border: 2px solid #ffc6ff;
     box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover .profile-pic {
+    border-color: #fff;
+    box-shadow: 0 6px 16px rgba(255, 107, 157, 0.6);
 }
 
 .user-name {

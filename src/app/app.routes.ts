@@ -11,10 +11,12 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard';
 import { ProductManagementComponent } from './components/admin/product-management';
 import { UserManagementComponent } from './components/admin/user-management';
 import { OrderManagementComponent } from './components/admin/order-management';
+import { VerifyEmailComponent } from './components/verify-email/verify-email';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/products', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
+    { path: 'verify-email', component: VerifyEmailComponent },
     { path: 'products', component: ProductList },
     { path: 'product/:id', component: ProductDetail },
     { path: 'cart', component: ShoppingCart },

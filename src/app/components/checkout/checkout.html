@@ -40,11 +40,11 @@
             <div class="summary-items">
                 <div *ngFor="let item of cartItems" class="summary-item-row">
                     <span>{{ item.product?.name }} x {{ item.quantity }}</span>
-                    <span>${{ ((item.product?.price || 0) * item.quantity).toFixed(2) }}</span>
+                    <span>EGP {{ ((item.product?.price || 0) * item.quantity).toFixed(2) }}</span>
                 </div>
             </div>
             <div class="summary-total">
-                <strong>Total: ${{ total.toFixed(2) }}</strong>
+                <strong>Total: EGP {{ total.toFixed(2) }}</strong>
             </div>
         </div>
     </div>

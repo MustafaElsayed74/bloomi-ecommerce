@@ -312,8 +312,9 @@ textarea.form-input {
     display: inline-block;
     padding: 4px 8px;
     border-radius: 4px;
-    background: rgba(34, 197, 94, 0.15);
-    color: #86efac;
+    background: rgba(255, 107, 157, 0.15);
+    color: #ff6b9d;
+    border: 1px solid rgba(255, 107, 157, 0.35);
     font-size: 0.85rem;
 }
 

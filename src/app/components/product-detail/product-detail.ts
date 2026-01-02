@@ -17,6 +17,8 @@ export class ProductDetail implements OnInit {
   product: Product | null = null;
   quantity = 1;
   loading = true;
+  successMessage = '';
+  errorMessage = '';
 
   constructor(
     private productService: ProductService,
@@ -54,13 +56,15 @@ export class ProductDetail implements OnInit {
         product: this.product
       }).subscribe(
         (item) => {
-          alert(`${this.product?.name} added to cart!`);
+          this.successMessage = `${this.product?.name} added to cart!`;
           this.cartService.loadCart();
           this.quantity = 1;
+          setTimeout(() => this.successMessage = '', 5000);
         },
         (error) => {
           console.error('Error adding to cart:', error);
-          alert('Failed to add to cart');
+          this.errorMessage = 'Failed to add to cart';
+          setTimeout(() => this.errorMessage = '', 5000);
         }
       );
     }

@@ -17,11 +17,10 @@
                     <ng-container *ngIf="(isAuthenticated$ | async) as isAuth">
                         <ng-container *ngIf="isAuth; else loginButton">
                             <div class="user-info">
-                                <div *ngIf="currentUser$ | async as user" class="user-profile">
+                                <a routerLink="/profile" *ngIf="currentUser$ | async as user" class="user-profile">
                                     <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
                                     <span class="user-name">{{ user.name }}</span>
-                                </div>
-                                <a routerLink="/profile" class="profile-link">Profile</a>
+                                </a>
                                 <button (click)="logout()" class="logout-btn">Logout</button>
                             </div>
                         </ng-container>

@@ -114,6 +114,9 @@ export class LoginComponent implements OnInit {
                 if (res && res.success) {
                     console.log('[LoginComponent] Login successful, navigating to home');
                     this.router.navigate(['/']);
+                } else if (res?.emailVerificationRequired) {
+                    // Email not verified
+                    this.errorMessage = 'Please verify your email before logging in. Check your inbox for a verification link.';
                 } else {
                     console.log('[LoginComponent] Login failed with message:', res?.message);
                     this.errorMessage = res?.message || 'Login failed';
@@ -149,8 +152,15 @@ export class LoginComponent implements OnInit {
         this.authService.signup(this.email, this.password, this.name).subscribe({
             next: (res) => {
                 if (res.success) {
-                    this.successMessage = 'Account created successfully! Redirecting...';
-                    setTimeout(() => this.router.navigate(['/']), 1500);
+                    if (res.emailVerificationRequired) {
+                        this.successMessage = 'Account created! Check your email to verify your account.';
+                        // Don't redirect immediately - user needs to verify email first
+                        this.isLogin = true;
+                        setTimeout(() => this.resetForm(), 1500);
+                    } else {
+                        this.successMessage = 'Account created successfully! Redirecting...';
+                        setTimeout(() => this.router.navigate(['/']), 1500);
+                    }
                 } else {
                     this.errorMessage = res.message || 'Signup failed';
                 }
@@ -158,7 +168,7 @@ export class LoginComponent implements OnInit {
             },
             error: (error) => {
                 console.error('Signup error:', error);
-                this.errorMessage = 'Signup failed. Please try again.';
+                this.errorMessage = error?.error?.message || error?.message || 'Signup failed. Please try again.';
                 this.isLoading = false;
             }
         });

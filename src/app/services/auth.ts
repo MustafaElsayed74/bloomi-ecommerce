@@ -5,9 +5,10 @@ import { tap, map } from 'rxjs/operators';
 
 export interface AuthResponse {
     success: boolean;
-    token: string;
-    user: UserDto;
+    token?: string;
+    user?: UserDto;
     message?: string;
+    emailVerificationRequired?: boolean;
 }
 
 export interface UserDto {
@@ -17,6 +18,8 @@ export interface UserDto {
     profilePicture?: string;
     address?: string;
     phoneNumber?: string;
+    isPhoneVerified?: boolean;
+    verifiedPhoneNumbers?: string[];
 }
 
 export interface UpdateProfilePayload {
@@ -54,12 +57,16 @@ export class AuthService {
         return this.http.post<AuthResponse>(`${this.apiUrl}/signup`, { email, password, name })
             .pipe(
                 tap(response => {
-                    if (response.success) {
+                    if (response.success && response.token && response.user) {
                         console.log('[AuthService] Signup successful, storing token:', response.token.substring(0, 20) + '...');
                         localStorage.setItem('authToken', response.token);
                         localStorage.setItem('currentUser', JSON.stringify(response.user));
                         this.currentUserSubject.next(response.user);
                         console.log('[AuthService] Token stored in localStorage');
+                    } else if (response.success && response.emailVerificationRequired) {
+                        // Signup requires email verification; do not store token/user yet
+                        console.log('[AuthService] Signup requires email verification. Token not issued.');
+                        this.currentUserSubject.next(null);
                     }
                 })
             );
@@ -71,12 +78,15 @@ export class AuthService {
             .pipe(
                 tap(response => {
                     console.log('[AuthService] Login response received:', response);
-                    if (response.success) {
+                    if (response.success && response.token && response.user) {
                         console.log('[AuthService] Login successful, storing token:', response.token.substring(0, 20) + '...');
                         localStorage.setItem('authToken', response.token);
                         localStorage.setItem('currentUser', JSON.stringify(response.user));
                         this.currentUserSubject.next(response.user);
                         console.log('[AuthService] Token stored in localStorage');
+                    } else if (response.emailVerificationRequired) {
+                        // Email not verified; ensure no stale session is set
+                        this.logout();
                     }
                 })
             );
@@ -86,7 +96,7 @@ export class AuthService {
         return this.http.post<AuthResponse>(`${this.apiUrl}/google-login`, { idToken })
             .pipe(
                 tap(response => {
-                    if (response.success) {
+                    if (response.success && response.token && response.user) {
                         localStorage.setItem('authToken', response.token);
                         localStorage.setItem('currentUser', JSON.stringify(response.user));
                         this.currentUserSubject.next(response.user);
@@ -111,6 +121,44 @@ export class AuthService {
                 this.currentUserSubject.next(user);
             })
         );
+    }
+
+    sendPhoneVerificationCode(phoneNumber: string): Observable<{ message: string }> {
+        return this.http.post<{ message: string }>(`${this.profileApiUrl}/phone/send-code`, { phoneNumber });
+    }
+
+    verifyPhoneCode(code: string): Observable<UserDto> {
+        return this.http.post<UserDto>(`${this.profileApiUrl}/phone/verify-code`, { code }).pipe(
+            tap(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+            })
+        );
+    }
+
+    deleteVerifiedPhone(phoneNumber: string): Observable<UserDto> {
+        return this.http.delete<UserDto>(`${this.profileApiUrl}/phone/verified/${encodeURIComponent(phoneNumber)}`).pipe(
+            tap(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+            })
+        );
+    }
+
+    uploadProfilePicture(file: File): Observable<UserDto> {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return this.http.post<UserDto>(`${this.profileApiUrl}/upload-picture`, formData).pipe(
+            tap(user => {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                this.currentUserSubject.next(user);
+            })
+        );
+    }
+
+    verifyEmail(token: string): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(`${this.apiUrl}/verify-email`, { token });
     }
 
     logout(): void {
