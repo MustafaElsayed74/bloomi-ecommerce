@@ -13,7 +13,7 @@ export interface WishlistItem {
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
-    private apiUrl = 'http://localhost:5076/api/wishlist';
+    private apiUrl = `${environment.apiUrl}/wishlist`;
 
     constructor(private http: HttpClient) { }
 

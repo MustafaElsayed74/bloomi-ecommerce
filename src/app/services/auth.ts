@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponse {
     success: boolean;
@@ -33,8 +34,8 @@ export interface UpdateProfilePayload {
     providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:5076/api/auth';
-    private profileApiUrl = 'http://localhost:5076/api/profile';
+    private apiUrl = `${environment.apiUrl}/auth`;
+    private profileApiUrl = `${environment.apiUrl}/profile`;
     private currentUserSubject = new BehaviorSubject<UserDto | null>(this.getUserFromStorage());
     public currentUser$ = this.currentUserSubject.asObservable();
     public isAuthenticated$ = this.currentUserSubject.asObservable().pipe(

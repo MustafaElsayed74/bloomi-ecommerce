@@ -7,7 +7,7 @@ import { CartItem } from '../models/ecommerce.model';
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = 'http://localhost:5076/api/cart';
+  private apiUrl = `${environment.apiUrl}/cart`;
   private sessionId = this.getOrCreateSessionId();
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
 

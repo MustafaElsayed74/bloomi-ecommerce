@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { loadStripe } from '@stripe/stripe-js';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
 })
 export class StripeService {
-    private apiUrl = 'http://localhost:5076/api/payment';
+    private apiUrl = `${environment.apiUrl}/payment`;
     private publishableKey = 'pk_test_51SkfI3AWkBaIhrjmair8ojlK19MrbWTTbSwTy31YOU5XYJKLKLXcJqqxzYiVMMBWlDkPJKYEhC4Qc1Qe6JEseji400jYUOyGe9';
 
     constructor(private http: HttpClient) { }

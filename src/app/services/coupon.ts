@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Coupon, CouponValidationResult, CreateCouponRequest } from '../models/ecommerce.model';
-
+import { Coupon, CouponValidationResult, CreateCouponRequest } from '../models/ecommerce.model'; import { environment } from '../../environments/environment';
 @Injectable({
     providedIn: 'root'
 })
 export class CouponService {
-    private apiUrl = 'http://localhost:5076/api/Coupons';
+    private apiUrl = `${environment.apiUrl}/Coupons`;
 
     constructor(private http: HttpClient) { }
 

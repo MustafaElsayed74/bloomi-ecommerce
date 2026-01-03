@@ -7,7 +7,7 @@ import { Order } from '../models/ecommerce.model';
   providedIn: 'root',
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:5076/api/orders';
+  private apiUrl = `${environment.apiUrl}/orders`;
 
   constructor(private http: HttpClient) { }
 

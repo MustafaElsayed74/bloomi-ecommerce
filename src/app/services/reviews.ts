@@ -18,7 +18,7 @@ export interface Review {
 
 @Injectable({ providedIn: 'root' })
 export class ReviewsService {
-    private apiUrl = 'http://localhost:5076/api/reviews';
+    private apiUrl = `${environment.apiUrl}/reviews`;
 
     constructor(private http: HttpClient) { }
 
