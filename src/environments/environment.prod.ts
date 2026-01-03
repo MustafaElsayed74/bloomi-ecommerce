@@ -1,3 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://ecommerce-frontend-rho.vercel.app/api'
+    apiUrl: 'https://bloomi-ecommerce.vercel.app/api'
+};
