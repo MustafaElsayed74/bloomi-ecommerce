@@ -6,13 +6,14 @@ import { AdminService } from '../../services/admin';
 interface Order {
     id: string;
     orderNumber: string;
-    userId: string;
+    userId?: string;
     totalAmount: number;
     status: string;
     createdAt: string;
     items?: any[];
     customerName?: string;
     customerEmail?: string;
+    itemCount?: number;
 }
 
 @Component({
@@ -107,8 +108,23 @@ export class OrderManagementComponent implements OnInit {
 
     viewOrderDetails(order: Order): void {
         console.log('[OrderManagementComponent] viewOrderDetails:', order.id);
-        this.selectedOrder = { ...order };
-        this.showOrderDetails = true;
+        this.isLoading = true;
+        const orderId = typeof order.id === 'string' ? parseInt(order.id, 10) : order.id;
+
+        this.adminService.getOrder(orderId).subscribe({
+            next: (fullOrder) => {
+                console.log('[OrderManagementComponent] Full order loaded:', fullOrder);
+                this.selectedOrder = fullOrder;
+                this.showOrderDetails = true;
+                this.isLoading = false;
+            },
+            error: (error) => {
+                console.error('[OrderManagementComponent] Error loading order details:', error);
+                this.errorMessage = 'Failed to load order details';
+                this.isLoading = false;
+                this.dismissMessageAfterDelay();
+            }
+        });
     }
 
     closeOrderDetails(): void {

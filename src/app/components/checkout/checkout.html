@@ -1,5 +1,24 @@
 <div class="container">
-    <h1>Checkout</h1>
+    <!-- Checkout Header with Progress -->
+    <div class="checkout-header">
+        <h1>🛒 Secure Checkout</h1>
+        <div class="checkout-progress">
+            <div class="progress-step completed">
+                <span class="step-number">1</span>
+                <span class="step-label">🛒 Cart</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step active">
+                <span class="step-number">2</span>
+                <span class="step-label">📍 Shipping</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step">
+                <span class="step-number">3</span>
+                <span class="step-label">💳 Payment</span>
+            </div>
+        </div>
+    </div>
 
     <div class="checkout-content">
         <div class="checkout-form">
@@ -16,9 +35,44 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Shipping Address *</label>
+                    <h3>Shipping Address</h3>
+
+                    <!-- Primary address option - shown first and selected by default -->
+                    <div *ngIf="currentUser && currentUser.address" class="address-option primary-address"
+                        [class.selected]="!useNewAddress">
+                        <label>
+                            <input type="radio" [(ngModel)]="useNewAddress" [value]="false" name="addressOption" />
+                            <span class="saved-address">
+                                <div class="address-header">
+                                    <strong>📍 Default Address</strong>
+                                    <span class="badge-primary">Primary</span>
+                                </div>
+                                <p>{{ currentUser.address }}</p>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Divider -->
+                    <div *ngIf="currentUser && currentUser.address" class="address-divider">
+                        <span>OR</span>
+                    </div>
+
+                    <!-- Option to use new address -->
+                    <div class="address-option" [class.selected]="useNewAddress">
+                        <label>
+                            <input type="radio" [(ngModel)]="useNewAddress" [value]="true" name="addressOption" />
+                            <span>
+                                <strong>+ Add New Address</strong>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- New address input -->
+                <div *ngIf="useNewAddress" class="form-group">
+                    <label for="address">Enter Your Shipping Address *</label>
                     <textarea id="address" [(ngModel)]="order.shippingAddress" name="shippingAddress" rows="4"
-                        required></textarea>
+                        placeholder="Street address, apartment number, city, state, zip code" required></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary" [disabled]="loading">
@@ -43,8 +97,55 @@
                     <span>EGP {{ ((item.product?.price || 0) * item.quantity).toFixed(2) }}</span>
                 </div>
             </div>
-            <div class="summary-total">
-                <strong>Total: EGP {{ total.toFixed(2) }}</strong>
+
+            <!-- Coupon Section -->
+            <div class="coupon-section">
+                <h3>Have a Coupon?</h3>
+
+                <div *ngIf="!appliedCoupon" class="coupon-input-wrapper">
+                    <input type="text" [(ngModel)]="couponCode" placeholder="Enter coupon code" class="coupon-input"
+                        [disabled]="couponLoading" (keyup.enter)="applyCoupon()" />
+                    <button class="btn btn-apply-coupon" (click)="applyCoupon()"
+                        [disabled]="couponLoading || !couponCode.trim()">
+                        {{ couponLoading ? 'Checking...' : 'Apply' }}
+                    </button>
+                </div>
+
+                <div *ngIf="appliedCoupon" class="applied-coupon">
+                    <div class="coupon-badge">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                fill="currentColor" />
+                        </svg>
+                        <span>{{ couponCode }}</span>
+                    </div>
+                    <button class="btn-remove-coupon" (click)="removeCoupon()">×</button>
+                </div>
+
+                <div *ngIf="couponMessage" class="coupon-success">
+                    {{ couponMessage }}
+                </div>
+
+                <div *ngIf="couponError" class="coupon-error">
+                    {{ couponError }}
+                </div>
+            </div>
+
+            <!-- Summary Totals -->
+            <div class="summary-breakdown">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>EGP {{ total.toFixed(2) }}</span>
+                </div>
+                <div *ngIf="discount > 0" class="summary-row discount-row">
+                    <span>Discount:</span>
+                    <span>- EGP {{ discount.toFixed(2) }}</span>
+                </div>
+                <div class="summary-total">
+                    <strong>Total:</strong>
+                    <strong>EGP {{ finalTotal.toFixed(2) }}</strong>
+                </div>
             </div>
         </div>
     </div>

@@ -47,40 +47,118 @@
         </div>
     </div>
 
-    <h1>Our Products</h1>
+    <div class="header-section">
+        <h1>Our Products</h1>
+
+        <div class="filters-row">
+            <div class="category-filter">
+                <label for="category-select">Category:</label>
+                <select id="category-select" class="category-select" [(ngModel)]="selectedCategory"
+                    (change)="onCategoryChange(selectedCategory)">
+                    <option value="">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                </select>
+            </div>
+
+            <div class="sort-container">
+                <label for="sort-select">Sort by:</label>
+                <select id="sort-select" class="sort-select" [(ngModel)]="sortBy"
+                    (change)="loadProducts(searchTerm, selectedCategory)">
+                    <option value="">Default</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name: A to Z</option>
+                    <option value="name-desc">Name: Z to A</option>
+                    <option value="rating-desc">Highest Rated</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
     <div *ngIf="loading" class="loading">
         Loading products...
     </div>
+    Loading products...
+</div>
 
-    <div *ngIf="error" class="error">
-        {{ error }}
-    </div>
+<div *ngIf="error" class="error">
+    {{ error }}
+</div>
 
-    <div *ngIf="!loading && products.length > 0" class="products-grid">
-        <div *ngFor="let product of products" class="product-card">
-            <div class="product-image">
-                <img [src]="product.imageUrl" [alt]="product.name" />
+<div *ngIf="!loading && products.length > 0" class="products-grid">
+    <div *ngFor="let product of products" class="product-card">
+        <div class="product-image">
+            <img [src]="product.imageUrl" [alt]="product.name" />
+        </div>
+        <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="category">{{ product.category }}</p>
+            <p class="description">{{ product.description }}</p>
+            <div class="product-footer">
+                <span class="price">EGP {{ product.price.toFixed(2) }}</span>
+                <span class="rating">⭐ {{ product.rating }}</span>
             </div>
-            <div class="product-info">
-                <h3>{{ product.name }}</h3>
-                <p class="category">{{ product.category }}</p>
-                <p class="description">{{ product.description }}</p>
-                <div class="product-footer">
-                    <span class="price">EGP {{ product.price.toFixed(2) }}</span>
-                    <span class="rating">⭐ {{ product.rating }}</span>
-                </div>
-                <div class="actions">
-                    <a [routerLink]="['/product', product.id]" class="btn btn-secondary">View Details</a>
-                    <button (click)="addToCart(product)" [disabled]="product.stock === 0" class="btn btn-primary">
-                        {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
-                    </button>
-                </div>
+            <div class="actions">
+                <a [routerLink]="['/product', product.id]" class="btn btn-secondary">View Details</a>
+                <button (click)="addToCart(product)" [disabled]="product.stock === 0" class="btn btn-primary">
+                    {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+                </button>
+                <button type="button" class="btn btn-outline" (click)="toggleWishlist(product)">
+                    {{ isInWishlist(product.id) ? '❤️ In Wishlist' : '♡ Add to Wishlist' }}
+                </button>
             </div>
         </div>
     </div>
 
     <div *ngIf="!loading && products.length === 0" class="empty">
         No products available.
+    </div>
+</div>
+
+<!-- Pagination Controls -->
+<div *ngIf="!loading && totalPages > 1" class="pagination-container">
+    <div class="pagination-info">
+        Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalItems) }} of {{
+        totalItems }} products
+    </div>
+
+    <div class="pagination">
+        <button class="pagination-btn prev-btn" [disabled]="currentPage === 1" (click)="previousPage()"
+            [class.disabled]="currentPage === 1">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            Previous
+        </button>
+
+        <button *ngIf="getPageNumbers()[0] > 1" class="pagination-btn page-btn" (click)="goToPage(1)">
+            1
+        </button>
+
+        <span *ngIf="getPageNumbers()[0] > 2" class="pagination-ellipsis">...</span>
+
+        <button *ngFor="let page of getPageNumbers()" class="pagination-btn page-btn"
+            [class.active]="page === currentPage" (click)="goToPage(page)">
+            {{ page }}
+        </button>
+
+        <span *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1"
+            class="pagination-ellipsis">...</span>
+
+        <button *ngIf="getPageNumbers()[getPageNumbers().length - 1] < totalPages" class="pagination-btn page-btn"
+            (click)="goToPage(totalPages)">
+            {{ totalPages }}
+        </button>
+
+        <button class="pagination-btn next-btn" [disabled]="currentPage === totalPages" (click)="nextPage()"
+            [class.disabled]="currentPage === totalPages">
+            Next
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
     </div>
 </div>

@@ -4,30 +4,47 @@
             <div class="navbar-brand">
                 <a routerLink="/products" class="logo">🌸 Bloomi Store</a>
             </div>
+            <form class="search-bar" (ngSubmit)="onSearch()">
+                <input type="text" [(ngModel)]="searchTerm" name="search" placeholder="Search products"
+                    aria-label="Search products" (ngModelChange)="onSearchTermChange($event)">
+                <button type="submit" aria-label="Search">🔍</button>
+            </form>
             <ul class="navbar-menu">
-                <li><a routerLink="/products" class="nav-link">Shop</a></li>
-                <li><a routerLink="/cart" class="nav-link">
-                        Cart
+                <li><a routerLink="/products" class="nav-link">🛍️ Shop</a></li>
+                <li *ngIf="(isAuthenticated$ | async)">
+                    <a routerLink="/wishlist" class="nav-link wishlist-link" title="My Wishlist">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                        <span class="wishlist-badge" *ngIf="wishlistItemCount > 0">{{ wishlistItemCount }}</span>
+                    </a>
+                </li>
+                <li><a routerLink="/cart" class="nav-link cart-link">
+                        🛒
                         <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
                     </a></li>
                 <li *ngIf="isAdmin" class="admin-link">
                     <a routerLink="/admin" class="admin-cta">⚙️ Admin Dashboard</a>
                 </li>
                 <li class="auth-menu">
-                    <ng-container *ngIf="(isAuthenticated$ | async) as isAuth">
-                        <ng-container *ngIf="isAuth; else loginButton">
-                            <div class="user-info">
-                                <a routerLink="/profile" *ngIf="currentUser$ | async as user" class="user-profile">
-                                    <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
-                                    <span class="user-name">{{ user.name }}</span>
-                                </a>
-                                <button (click)="logout()" class="logout-btn">Logout</button>
-                            </div>
-                        </ng-container>
-                        <ng-template #loginButton>
-                            <a routerLink="/login" class="login-link">Login</a>
-                        </ng-template>
+                    <ng-container *ngIf="(isAuthenticated$ | async); else loginButton">
+                        <div class="user-info">
+                            <a routerLink="/profile" *ngIf="currentUser$ | async as user" class="user-profile">
+                                <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
+                                <span class="user-name">{{ user.name }}</span>
+                            </a>
+                            <button (click)="logout()" class="logout-btn">Logout</button>
+                        </div>
                     </ng-container>
+                    <ng-template #loginButton>
+                        <div class="guest-auth-buttons">
+                            <a routerLink="/login" class="login-btn">Login</a>
+                            <a routerLink="/login" class="signup-btn">Sign Up</a>
+                        </div>
+                    </ng-template>
                 </li>
             </ul>
         </div>

@@ -29,7 +29,7 @@
             <div class="toast-progress"></div>
         </div>
 
-        <div *ngIf="successMessage" class="toast toast-success">
+        <div *ngIf="successMessage" class="toast toast-pink">
             <div class="toast-icon-wrapper">
                 <svg class="toast-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path
@@ -98,7 +98,8 @@
                         </div>
                         <div class="info-item">
                             <label>Items Count</label>
-                            <p>{{ selectedOrder.items?.length || 0 }} item{{ (selectedOrder.items?.length || 0) !== 1 ?
+                            <p>{{ selectedOrder.itemCount || selectedOrder.items?.length || 0 }} item{{
+                                ((selectedOrder.itemCount || selectedOrder.items?.length || 0) !== 1) ?
                                 's' : '' }}</p>
                         </div>
                     </div>
@@ -198,7 +199,7 @@
                                 </div>
                             </td>
                             <td class="col-items">
-                                <span class="items-count">{{ order.items?.length || 0 }}</span>
+                                <span class="items-count">{{ order.itemCount || 0 }}</span>
                             </td>
                             <td class="col-actions">
                                 <button class="action-view" (click)="viewOrderDetails(order)" title="View Details">

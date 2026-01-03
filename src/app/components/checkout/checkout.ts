@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart';
 import { OrderService } from '../../services/order';
 import { StripeService, CheckoutItem } from '../../services/stripe';
-import { Order, OrderItem, CartItem } from '../../models/ecommerce.model';
+import { AuthService, UserDto } from '../../services/auth';
+import { CouponService } from '../../services/coupon';
+import { Order, OrderItem, CartItem, CouponValidationResult } from '../../models/ecommerce.model';
 
 @Component({
   selector: 'app-checkout',
@@ -17,8 +19,17 @@ import { Order, OrderItem, CartItem } from '../../models/ecommerce.model';
 export class Checkout implements OnInit {
   cartItems: CartItem[] = [];
   total = 0;
+  discount = 0;
+  finalTotal = 0;
   loading = false;
   paymentLoading = false;
+  couponLoading = false;
+  currentUser: UserDto | null = null;
+  useNewAddress = false;
+  couponCode = '';
+  appliedCoupon: CouponValidationResult | null = null;
+  couponMessage = '';
+  couponError = '';
 
   order: Order = {
     customerName: '',
@@ -32,11 +43,31 @@ export class Checkout implements OnInit {
     private cartService: CartService,
     private orderService: OrderService,
     private stripeService: StripeService,
+    private authService: AuthService,
+    private couponService: CouponService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadCart();
+    this.loadUserData();
+  }
+
+  loadUserData(): void {
+    this.authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.currentUser = user;
+        this.order.customerName = user.name;
+        this.order.customerEmail = user.email;
+        // Use the user's saved address as default if available
+        if (user.address) {
+          this.order.shippingAddress = user.address;
+          this.useNewAddress = false;  // Primary address is selected by default
+        } else {
+          this.useNewAddress = true;  // No saved address, so show new address input
+        }
+      }
+    });
   }
 
   loadCart(): void {
@@ -53,7 +84,51 @@ export class Checkout implements OnInit {
       (sum, item) => sum + ((item.product?.price || 0) * item.quantity),
       0
     );
-    this.order.totalAmount = this.total;
+    this.finalTotal = this.total - this.discount;
+    this.order.totalAmount = this.finalTotal;
+  }
+
+  applyCoupon(): void {
+    if (!this.couponCode.trim()) {
+      this.couponError = 'Please enter a coupon code';
+      setTimeout(() => this.couponError = '', 3000);
+      return;
+    }
+
+    this.couponLoading = true;
+    this.couponError = '';
+    this.couponMessage = '';
+
+    this.couponService.validateCoupon(this.couponCode.trim(), this.total).subscribe({
+      next: (result) => {
+        this.couponLoading = false;
+        if (result.isValid) {
+          this.appliedCoupon = result;
+          this.discount = result.discountAmount;
+          this.couponMessage = result.message;
+          this.calculateTotal();
+          setTimeout(() => this.couponMessage = '', 5000);
+        } else {
+          this.couponError = result.message;
+          setTimeout(() => this.couponError = '', 5000);
+        }
+      },
+      error: (error) => {
+        this.couponLoading = false;
+        this.couponError = 'Failed to validate coupon';
+        setTimeout(() => this.couponError = '', 5000);
+        console.error(error);
+      }
+    });
+  }
+
+  removeCoupon(): void {
+    this.appliedCoupon = null;
+    this.discount = 0;
+    this.couponCode = '';
+    this.couponMessage = '';
+    this.couponError = '';
+    this.calculateTotal();
   }
 
   submitOrder(): void {
@@ -70,8 +145,19 @@ export class Checkout implements OnInit {
       quantity: item.quantity
     } as OrderItem));
 
+    // Add coupon information to order
+    if (this.appliedCoupon?.isValid) {
+      this.order.discountAmount = this.discount;
+      this.order.appliedCouponCode = this.couponCode.trim();
+    }
+
     this.orderService.createOrder(this.order).subscribe(
       (createdOrder) => {
+        // Increment coupon usage if applied
+        if (this.appliedCoupon?.isValid && this.couponCode) {
+          this.couponService.incrementUsage(this.couponCode.trim()).subscribe();
+        }
+
         this.loading = false;
         alert('Order placed successfully!');
         this.cartService.clearCart().subscribe(() => {

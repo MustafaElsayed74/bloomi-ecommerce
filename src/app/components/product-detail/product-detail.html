@@ -79,10 +79,84 @@
                     <button (click)="increaseQuantity()" class="qty-btn">+</button>
                 </div>
                 <button (click)="addToCart()" class="btn btn-primary">Add to Cart</button>
+                <button (click)="toggleWishlist()" class="btn btn-wishlist" [class.in-wishlist]="isInWishlist">
+                    {{ isInWishlist ? '❤️ In Wishlist' : '♡ Add to Wishlist' }}
+                </button>
             </div>
 
             <div *ngIf="product.stock === 0" class="out-of-stock-message">
                 This product is currently out of stock
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div *ngIf="!loading && product" class="reviews-section">
+        <div class="reviews-header">
+            <h2>Customer Reviews</h2>
+            <div class="rating-summary">
+                <span class="average-rating">{{ product.rating }}</span>
+                <div class="stars">
+                    <span *ngFor="let star of getStarArray(Math.round(product.rating))" class="star">⭐</span>
+                </div>
+                <span class="review-count">({{ reviews.length }} reviews)</span>
+            </div>
+        </div>
+
+        <!-- Write Review Button -->
+        <div *ngIf="canReview && userId" class="write-review-section">
+            <button *ngIf="!showReviewForm" (click)="showReviewForm = true" class="btn btn-secondary">
+                Write a Review
+            </button>
+
+            <!-- Review Form -->
+            <div *ngIf="showReviewForm" class="review-form">
+                <h3>Write Your Review</h3>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="rating-input">
+                        <button *ngFor="let i of [1,2,3,4,5]" type="button" (click)="newReview.rating = i"
+                            [class.active]="i <= newReview.rating" class="star-btn">
+                            ⭐
+                        </button>
+                        <span class="rating-text">{{ newReview.rating }} / 5</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" [(ngModel)]="newReview.title" placeholder="Summary of your review"
+                        class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Review</label>
+                    <textarea [(ngModel)]="newReview.comment" placeholder="Share your experience with this product"
+                        rows="4" class="form-control"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button (click)="submitReview()" class="btn btn-primary">Submit Review</button>
+                    <button (click)="showReviewForm = false; newReview = { rating: 5, title: '', comment: '' }"
+                        class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+            <div *ngIf="reviewsLoading" class="loading-reviews">Loading reviews...</div>
+
+            <div *ngIf="!reviewsLoading && reviews.length === 0" class="no-reviews">
+                <p>No reviews yet. Be the first to review this product!</p>
+            </div>
+
+            <div *ngFor="let review of reviews" class="review-card">
+                <div class="review-header">
+                    <div class="review-rating">
+                        <span *ngFor="let star of getStarArray(review.rating)" class="star">⭐</span>
+                    </div>
+                    <span class="review-date">{{ review.createdAt | date: 'MMM d, y' }}</span>
+                </div>
+                <h4 class="review-title">{{ review.title }}</h4>
+                <p class="review-comment">{{ review.comment }}</p>
             </div>
         </div>
     </div>

@@ -1,0 +1,123 @@
+<div class="home-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <p class="hero-subtitle">PROFESSIONAL SKINCARE SOLUTIONS</p>
+            <h1 class="hero-title">Radiant Skin Starts Here</h1>
+            <p class="hero-description">Discover dermatologist-approved products tailored to your unique skin needs</p>
+            <a routerLink="/products" class="hero-cta">Explore Collection</a>
+        </div>
+    </section>
+
+    <!-- Category Showcase -->
+    <section class="category-section">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="category-grid">
+            <div *ngFor="let category of categoryShowcase" class="category-card">
+                <div class="category-image">
+                    <img [src]="category.image" [alt]="category.name" />
+                    <div class="category-overlay">
+                        <h3>{{ category.name }}</h3>
+                        <p>{{ category.description }}</p>
+                        <a [routerLink]="['/products']" [queryParams]="{category: category.name}" class="category-btn">
+                            SHOP NOW
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Products -->
+    <section class="trending-section">
+        <div class="section-header">
+            <h2 class="section-title">Trending Products</h2>
+            <a routerLink="/products" class="view-all">View All →</a>
+        </div>
+
+        <div *ngIf="loading" class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading products...</p>
+        </div>
+
+        <div *ngIf="!loading" class="products-carousel">
+            <div *ngFor="let product of trendingProducts; let i = index" class="product-card-small">
+                <a [routerLink]="['/product', product.id]" class="product-link">
+                    <div class="product-badges">
+                        <span *ngIf="i < 2" class="badge badge-new">NEW ARRIVAL</span>
+                        <span *ngIf="product.rating >= 4.5" class="badge badge-top">TOP SELLING</span>
+                    </div>
+                    <div class="product-image-small">
+                        <img [src]="product.imageUrl" [alt]="product.name" />
+                    </div>
+                    <div class="product-info-small">
+                        <p class="product-category-small">{{ product.category }}</p>
+                        <h3 class="product-name-small">{{ product.name }}</h3>
+                        <div class="product-footer-small">
+                            <span class="product-price-small">EGP {{ product.price.toFixed(2) }}</span>
+                            <div class="product-rating-small">
+                                <span class="stars">⭐ {{ product.rating }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore by Type -->
+    <section class="explore-section">
+        <h2 class="section-title">Explore Products by Type</h2>
+        <div class="explore-categories">
+            <a *ngFor="let category of categories" [routerLink]="['/products']" [queryParams]="{category: category}"
+                class="explore-card">
+                <span class="explore-name">{{ category }}</span>
+                <span class="explore-arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="value-section">
+        <div class="value-grid">
+            <div *ngFor="let value of valuePropositions" class="value-card">
+                <div class="value-icon">{{ value.icon }}</div>
+                <h3 class="value-title">{{ value.title }}</h3>
+                <p class="value-description">{{ value.description }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="new-arrivals-section">
+        <div class="section-header">
+            <h2 class="section-title">New Arrivals</h2>
+            <a routerLink="/products" [queryParams]="{sortBy: 'newest'}" class="view-all">View All →</a>
+        </div>
+
+        <div *ngIf="!loading" class="arrivals-grid">
+            <div *ngFor="let product of newArrivals" class="arrival-card">
+                <a [routerLink]="['/product', product.id]">
+                    <div class="arrival-image">
+                        <img [src]="product.imageUrl" [alt]="product.name" />
+                        <span class="new-badge">NEW</span>
+                    </div>
+                    <div class="arrival-info">
+                        <p class="arrival-category">{{ product.category }}</p>
+                        <h3 class="arrival-name">{{ product.name }}</h3>
+                        <p class="arrival-price">EGP {{ product.price.toFixed(2) }}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Start Your Skincare Journey Today</h2>
+            <p>Discover products tailored to your skin's unique needs</p>
+            <a routerLink="/products" class="cta-button">Explore All Products</a>
+        </div>
+    </section>
+</div>

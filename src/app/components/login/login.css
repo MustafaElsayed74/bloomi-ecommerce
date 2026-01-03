@@ -168,6 +168,24 @@
     color: #bbb;
 }
 
+.forgot-password-link {
+    text-align: right;
+    margin-top: -8px;
+}
+
+.forgot-password-link .link-text {
+    color: #ec4899;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.forgot-password-link .link-text:hover {
+    color: #db2777;
+    text-decoration: underline;
+}
+
 /* Buttons */
 .btn {
     padding: 12px 20px;

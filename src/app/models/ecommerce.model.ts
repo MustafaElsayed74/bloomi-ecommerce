@@ -24,6 +24,8 @@ export interface Order {
     customerEmail: string;
     shippingAddress: string;
     totalAmount: number;
+    discountAmount?: number;
+    appliedCouponCode?: string;
     status?: string;
     items: OrderItem[];
     createdAt?: Date;
@@ -36,5 +38,44 @@ export interface OrderItem {
     productName: string;
     price: number;
     quantity: number;
+}
+
+export enum DiscountType {
+    Percentage = 0,
+    FixedAmount = 1
+}
+
+export interface Coupon {
+    id: number;
+    code: string;
+    description: string;
+    discountType: DiscountType;
+    discountValue: number;
+    minimumOrderAmount?: number;
+    maximumDiscountAmount?: number;
+    expirationDate?: Date;
+    maxUsageCount?: number;
+    usageCount: number;
+    isActive: boolean;
+    createdAt: Date;
+    createdByUserId: number;
+}
+
+export interface CouponValidationResult {
+    isValid: boolean;
+    message: string;
+    discountAmount: number;
+    coupon?: Coupon;
+}
+
+export interface CreateCouponRequest {
+    code: string;
+    description: string;
+    discountType: DiscountType;
+    discountValue: number;
+    minimumOrderAmount?: number;
+    maximumDiscountAmount?: number;
+    expirationDate?: Date;
+    maxUsageCount?: number;
 }
 
