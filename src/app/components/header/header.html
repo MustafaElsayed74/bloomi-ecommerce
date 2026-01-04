@@ -20,13 +20,12 @@
                 </a>
             </div>
             <form class="search-bar" (ngSubmit)="onSearch()">
-                <input type="text" [(ngModel)]="searchTerm" name="search"
-                    [placeholder]="'HEADER.SEARCH_PLACEHOLDER' | translate" aria-label="Search products"
-                    (ngModelChange)="onSearchTermChange($event)">
+                <input type="text" [(ngModel)]="searchTerm" name="search" placeholder="Search products"
+                    aria-label="Search products" (ngModelChange)="onSearchTermChange($event)">
                 <button type="submit" aria-label="Search">🔍</button>
             </form>
             <ul class="navbar-menu">
-                <li><a routerLink="/products" class="nav-link">🛍️ {{ 'HEADER.SHOP' | translate }}</a></li>
+                <li><a routerLink="/products" class="nav-link">🛍️ Shop</a></li>
                 @if (isAuthenticated$ | async) {
                 <li>
                     <a routerLink="/wishlist" class="nav-link wishlist-link" title="My Wishlist">
@@ -50,21 +49,9 @@
                     </a></li>
                 @if (isAdmin) {
                 <li class="admin-link">
-                    <a routerLink="/admin" class="admin-cta">⚙️ {{ 'HEADER.ADMIN_DASHBOARD' | translate }}</a>
+                    <a routerLink="/admin" class="admin-cta">⚙️ Admin Dashboard</a>
                 </li>
                 }
-                <li>
-                    <button class="lang-toggle" (click)="languageService.toggleLanguage()"
-                        [attr.aria-label]="'Switch language'">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path
-                                d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                        </svg>
-                        {{ languageService.getCurrentLanguage() === 'en' ? 'ع' : 'EN' }}
-                    </button>
-                </li>
                 <li class="auth-menu">
                     @if (isAuthenticated$ | async) {
                     <div class="user-info">
@@ -80,21 +67,21 @@
                             <div class="profile-dropdown">
                                 <a routerLink="/orders" class="dropdown-item" (click)="showProfileDropdown = false">
                                     <span class="dropdown-icon">📦</span>
-                                    {{ 'HEADER.ORDER_HISTORY' | translate }}
+                                    Order History
                                 </a>
                                 <a routerLink="/profile" class="dropdown-item" (click)="showProfileDropdown = false">
                                     <span class="dropdown-icon">⚙️</span>
-                                    {{ 'HEADER.PROFILE_SETTINGS' | translate }}
+                                    Profile Settings
                                 </a>
                             </div>
                             }
                         </div>
-                        <button (click)="logout()" class="logout-btn">{{ 'HEADER.LOGOUT' | translate }}</button>
+                        <button (click)="logout()" class="logout-btn">Logout</button>
                     </div>
                     } @else {
                     <div class="guest-auth-buttons">
-                        <a routerLink="/login" class="login-btn">{{ 'HEADER.LOGIN' | translate }}</a>
-                        <a routerLink="/login" class="signup-btn">{{ 'HEADER.SIGNUP' | translate }}</a>
+                        <a routerLink="/login" class="login-btn">Login</a>
+                        <a routerLink="/login" class="signup-btn">Sign Up</a>
                     </div>
                     }
                 </li>

@@ -28,8 +28,6 @@
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
-    "@ngx-translate/core": "^17.0.0",
-    "@ngx-translate/http-loader": "^17.0.0",
     "@react-oauth/google": "^0.13.4",
     "@stripe/stripe-js": "^8.6.0",
     "ng-gapi": "^0.0.94",

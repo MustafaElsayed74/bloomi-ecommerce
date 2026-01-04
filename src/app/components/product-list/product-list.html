@@ -49,47 +49,46 @@
 
     <div class="header-section">
         <div class="title-block">
-            <p class="eyebrow">{{ 'HEADER.SHOP' | translate }}</p>
-            <h1>{{ 'PRODUCT_LIST.TITLE' | translate }}</h1>
-            <p class="subtitle">{{ 'PRODUCT_LIST.SUBTITLE' | translate }}</p>
+            <p class="eyebrow">Shop</p>
+            <h1>Our Products</h1>
+            <p class="subtitle">Browse the catalog and find the right fit faster.</p>
         </div>
 
         <div class="filters-card">
             <div class="filters-row">
                 <div class="category-filter">
-                    <label for="category-select">{{ 'PRODUCT_LIST.CATEGORY' | translate }}</label>
+                    <label for="category-select">Category</label>
                     <select id="category-select" class="category-select" [(ngModel)]="selectedCategory"
                         (change)="onCategoryChange(selectedCategory)">
-                        <option value="">{{ 'PRODUCT_LIST.ALL_CATEGORIES' | translate }}</option>
+                        <option value="">All Categories</option>
                         <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
                     </select>
                 </div>
 
                 <div class="sort-container">
-                    <label for="sort-select">{{ 'PRODUCT_LIST.SORT' | translate }}</label>
+                    <label for="sort-select">Sort</label>
                     <select id="sort-select" class="sort-select" [(ngModel)]="sortBy"
                         (change)="loadProducts(searchTerm, selectedCategory)">
-                        <option value="">{{ 'PRODUCT_LIST.DEFAULT' | translate }}</option>
-                        <option value="price-asc">{{ 'PRODUCT_LIST.PRICE_LOW_HIGH' | translate }}</option>
-                        <option value="price-desc">{{ 'PRODUCT_LIST.PRICE_HIGH_LOW' | translate }}</option>
-                        <option value="name-asc">{{ 'PRODUCT_LIST.NAME_A_Z' | translate }}</option>
-                        <option value="name-desc">{{ 'PRODUCT_LIST.NAME_Z_A' | translate }}</option>
-                        <option value="rating-desc">{{ 'PRODUCT_LIST.HIGHEST_RATED' | translate }}</option>
-                        <option value="newest">{{ 'PRODUCT_LIST.NEWEST' | translate }}</option>
+                        <option value="">Default</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
+                        <option value="rating-desc">Highest Rated</option>
+                        <option value="newest">Newest First</option>
                     </select>
                 </div>
             </div>
 
             <div class="meta-row" *ngIf="!loading && totalItems">
-                <span class="chip filled">{{ totalItems }} {{ 'PRODUCT_LIST.ITEMS' | translate }}</span>
-                <span class="chip subtle">{{ 'PRODUCT_LIST.PAGE' | translate }} {{ currentPage }} {{ 'PRODUCT_LIST.OF' |
-                    translate }} {{ totalPages || 1 }}</span>
+                <span class="chip filled">{{ totalItems }} items</span>
+                <span class="chip subtle">Page {{ currentPage }} of {{ totalPages || 1 }}</span>
             </div>
         </div>
     </div>
 
     <div *ngIf="loading" class="loading">
-        {{ 'PRODUCT_LIST.LOADING' | translate }}
+        Loading products...
     </div>
 </div>
 
@@ -101,7 +100,7 @@
     <div *ngFor="let product of products" class="product-card" (click)="navigateToProduct(product.id)">
         <div class="product-image">
             <img [src]="product.imageUrl" [alt]="product.name" />
-            <span class="badge stock" *ngIf="product.stock === 0">{{ 'PRODUCT_LIST.SOLD_OUT' | translate }}</span>
+            <span class="badge stock" *ngIf="product.stock === 0">Sold out</span>
         </div>
         <div class="product-info">
             <div class="card-top">
@@ -112,14 +111,13 @@
             <p class="description">{{ product.description }}</p>
 
             <div class="product-footer">
-                <span class="price">{{ 'COMMON.EGP' | translate }} {{ product.price.toFixed(2) }}</span>
+                <span class="price">EGP {{ product.price.toFixed(2) }}</span>
                 <span class="rating">⭐ {{ product.rating }}</span>
             </div>
 
             <button (click)="addToCart(product); $event.stopPropagation()" [disabled]="product.stock === 0"
                 class="btn-primary-full">
-                {{ product.stock > 0 ? ('PRODUCT_LIST.ADD_TO_CART' | translate) : ('PRODUCT_LIST.OUT_OF_STOCK' |
-                translate) }}
+                {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
             </button>
 
             <div class="actions-secondary">
@@ -130,24 +128,22 @@
                             [attr.fill]="isInWishlist(product.id) ? 'currentColor' : 'none'" stroke="currentColor"
                             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    {{ isInWishlist(product.id) ? ('PRODUCT_LIST.SAVED' | translate) : ('PRODUCT_LIST.SAVE' | translate)
-                    }}
+                    {{ isInWishlist(product.id) ? 'Saved' : 'Save' }}
                 </button>
             </div>
         </div>
     </div>
 
     <div *ngIf="!loading && products.length === 0" class="empty">
-        {{ 'PRODUCT_LIST.NO_PRODUCTS' | translate }}
+        No products available.
     </div>
 </div>
 
 <!-- Pagination Controls -->
 <div *ngIf="!loading && totalPages > 1" class="pagination-container">
     <div class="pagination-info">
-        {{ 'PRODUCT_LIST.SHOWING' | translate }} {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage *
-        pageSize, totalItems) }} {{ 'PRODUCT_LIST.OF' | translate }} {{
-        totalItems }} {{ 'PRODUCT_LIST.PRODUCTS' | translate }}
+        Showing {{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalItems) }} of {{
+        totalItems }} products
     </div>
 
     <div class="pagination">
@@ -157,7 +153,7 @@
                 <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
-            {{ 'COMMON.PREVIOUS' | translate }}
+            Previous
         </button>
 
         <button *ngIf="getPageNumbers()[0] > 1" class="pagination-btn page-btn" (click)="goToPage(1)">
@@ -181,7 +177,7 @@
 
         <button class="pagination-btn next-btn" [disabled]="currentPage === totalPages" (click)="nextPage()"
             [class.disabled]="currentPage === totalPages">
-            {{ 'COMMON.NEXT' | translate }}
+            Next
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
