@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { CartService } from '../../services/cart';
 import { AuthService } from '../../services/auth';
 import { WishlistService } from '../../services/wishlist';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TranslateModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -27,7 +29,8 @@ export class Header implements OnInit {
     private cartService: CartService,
     private authService: AuthService,
     private wishlistService: WishlistService,
-    private router: Router
+    private router: Router,
+    public languageService: LanguageService
   ) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
     this.currentUser$ = this.authService.currentUser$;

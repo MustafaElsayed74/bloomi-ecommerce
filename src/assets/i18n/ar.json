@@ -1,0 +1,45 @@
+{
+    "HEADER": {
+        "SHOP": "تسوق",
+        "CART": "السلة",
+        "WISHLIST": "المفضلة",
+        "LOGIN": "تسجيل الدخول",
+        "SIGNUP": "إنشاء حساب",
+        "LOGOUT": "تسجيل الخروج",
+        "ADMIN_DASHBOARD": "لوحة التحكم",
+        "ORDER_HISTORY": "سجل الطلبات",
+        "PROFILE_SETTINGS": "إعدادات الحساب",
+        "SEARCH_PLACEHOLDER": "ابحث عن منتجات"
+    },
+    "PRODUCT_LIST": {
+        "TITLE": "منتجاتنا",
+        "SUBTITLE": "تصفح الكتالوج واعثر على ما يناسبك بشكل أسرع.",
+        "CATEGORY": "الفئة",
+        "SORT": "ترتيب",
+        "ALL_CATEGORIES": "جميع الفئات",
+        "DEFAULT": "افتراضي",
+        "PRICE_LOW_HIGH": "السعر: من الأقل للأعلى",
+        "PRICE_HIGH_LOW": "السعر: من الأعلى للأقل",
+        "NAME_A_Z": "الاسم: من أ إلى ي",
+        "NAME_Z_A": "الاسم: من ي إلى أ",
+        "HIGHEST_RATED": "الأعلى تقييماً",
+        "NEWEST": "الأحدث أولاً",
+        "ITEMS": "منتج",
+        "PAGE": "صفحة",
+        "OF": "من",
+        "LOADING": "جاري تحميل المنتجات...",
+        "NO_PRODUCTS": "لا توجد منتجات متاحة.",
+        "ADD_TO_CART": "أضف للسلة",
+        "OUT_OF_STOCK": "غير متوفر",
+        "SOLD_OUT": "نفذت الكمية",
+        "SAVE": "حفظ",
+        "SAVED": "محفوظ",
+        "SHOWING": "عرض",
+        "PRODUCTS": "منتج"
+    },
+    "COMMON": {
+        "EGP": "ج.م",
+        "PREVIOUS": "السابق",
+        "NEXT": "التالي"
+    }
+}

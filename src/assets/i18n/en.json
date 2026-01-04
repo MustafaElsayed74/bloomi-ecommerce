@@ -1,0 +1,45 @@
+{
+    "HEADER": {
+        "SHOP": "Shop",
+        "CART": "Cart",
+        "WISHLIST": "Wishlist",
+        "LOGIN": "Login",
+        "SIGNUP": "Sign Up",
+        "LOGOUT": "Logout",
+        "ADMIN_DASHBOARD": "Admin Dashboard",
+        "ORDER_HISTORY": "Order History",
+        "PROFILE_SETTINGS": "Profile Settings",
+        "SEARCH_PLACEHOLDER": "Search products"
+    },
+    "PRODUCT_LIST": {
+        "TITLE": "Our Products",
+        "SUBTITLE": "Browse the catalog and find the right fit faster.",
+        "CATEGORY": "Category",
+        "SORT": "Sort",
+        "ALL_CATEGORIES": "All Categories",
+        "DEFAULT": "Default",
+        "PRICE_LOW_HIGH": "Price: Low to High",
+        "PRICE_HIGH_LOW": "Price: High to Low",
+        "NAME_A_Z": "Name: A to Z",
+        "NAME_Z_A": "Name: Z to A",
+        "HIGHEST_RATED": "Highest Rated",
+        "NEWEST": "Newest First",
+        "ITEMS": "items",
+        "PAGE": "Page",
+        "OF": "of",
+        "LOADING": "Loading products...",
+        "NO_PRODUCTS": "No products available.",
+        "ADD_TO_CART": "Add to Cart",
+        "OUT_OF_STOCK": "Out of Stock",
+        "SOLD_OUT": "Sold out",
+        "SAVE": "Save",
+        "SAVED": "Saved",
+        "SHOWING": "Showing",
+        "PRODUCTS": "products"
+    },
+    "COMMON": {
+        "EGP": "EGP",
+        "PREVIOUS": "Previous",
+        "NEXT": "Next"
+    }
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart';
 import { Product } from '../../models/ecommerce.model';
@@ -11,7 +12,7 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
