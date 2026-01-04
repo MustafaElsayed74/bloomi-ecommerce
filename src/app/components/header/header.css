@@ -1,13 +1,13 @@
 .navbar {
-    background: linear-gradient(135deg, rgba(255, 107, 157, 0.98) 0%, rgba(255, 182, 217, 0.96) 100%);
-    backdrop-filter: blur(15px);
-    padding: 20px 0;
-    box-shadow: 0 10px 40px rgba(255, 107, 157, 0.35);
-    border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.95) 0%, rgba(255, 158, 197, 0.93) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    padding: 16px 0;
+    box-shadow: 0 4px 24px rgba(255, 107, 157, 0.15), 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     position: sticky;
     top: 0;
     z-index: 100;
-    animation: slideDown 0.5s ease-out;
+    animation: slideDown 0.3s ease-out;
 }
 
 @keyframes slideDown {

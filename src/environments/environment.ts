@@ -1,4 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: '/api'
+    apiUrl: '/api',
+    appName: 'Bloomi',
+    appVersion: '1.0.0'
 };

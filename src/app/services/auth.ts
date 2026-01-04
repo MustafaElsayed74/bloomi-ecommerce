@@ -59,14 +59,10 @@ export class AuthService {
             .pipe(
                 tap(response => {
                     if (response.success && response.token && response.user) {
-                        console.log('[AuthService] Signup successful, storing token:', response.token.substring(0, 20) + '...');
                         localStorage.setItem('authToken', response.token);
                         localStorage.setItem('currentUser', JSON.stringify(response.user));
                         this.currentUserSubject.next(response.user);
-                        console.log('[AuthService] Token stored in localStorage');
                     } else if (response.success && response.emailVerificationRequired) {
-                        // Signup requires email verification; do not store token/user yet
-                        console.log('[AuthService] Signup requires email verification. Token not issued.');
                         this.currentUserSubject.next(null);
                     }
                 })
@@ -74,19 +70,14 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<AuthResponse> {
-        console.log('[AuthService] Calling login endpoint with email:', email);
         return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
             .pipe(
                 tap(response => {
-                    console.log('[AuthService] Login response received:', response);
                     if (response.success && response.token && response.user) {
-                        console.log('[AuthService] Login successful, storing token:', response.token.substring(0, 20) + '...');
                         localStorage.setItem('authToken', response.token);
                         localStorage.setItem('currentUser', JSON.stringify(response.user));
                         this.currentUserSubject.next(response.user);
-                        console.log('[AuthService] Token stored in localStorage');
                     } else if (response.emailVerificationRequired) {
-                        // Email not verified; ensure no stale session is set
                         this.logout();
                     }
                 })

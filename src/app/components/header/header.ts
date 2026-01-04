@@ -42,7 +42,6 @@ export class Header implements OnInit {
     const token = localStorage.getItem('authToken');
     if (token) {
       this.isAdmin = this.decodeAndCheckIsAdmin(token);
-      console.log('[Header] isAdmin:', this.isAdmin);
     }
 
     // Load wishlist count for authenticated users
@@ -65,10 +64,8 @@ export class Header implements OnInit {
     try {
       const payload = token.split('.')[1];
       const decoded = JSON.parse(atob(payload));
-      console.log('[Header] Decoded token:', decoded);
       return decoded.IsAdmin === 'True' || decoded.IsAdmin === 'true' || decoded.IsAdmin === true || decoded.IsAdmin === 1;
     } catch (error) {
-      console.error('Error decoding token:', error);
       return false;
     }
   }

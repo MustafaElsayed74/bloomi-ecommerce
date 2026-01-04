@@ -33,7 +33,7 @@ export class CartService {
   loadCart(): void {
     this.http.get<CartItem[]>(`${this.apiUrl}/${this.sessionId}`).subscribe(
       (items) => this.cartSubject.next(items),
-      (error) => console.log('Cart not found, starting fresh')
+      (error) => { /* Cart not found, starting fresh */ }
     );
   }
 
