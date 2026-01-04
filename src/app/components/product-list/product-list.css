@@ -279,61 +279,63 @@ h1 {
     font-weight: 700;
 }
 
-.actions {
-    display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
-}
-
-.btn {
-    padding: 0.35rem 0.65rem;
-    border: 1px solid transparent;
+.btn-primary-full {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: none;
     border-radius: 12px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-    font-size: 0.82rem;
-    font-weight: 700;
-    line-height: 1.1;
-    min-width: 96px;
-}
-
-.btn-primary {
     background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     color: white;
-    box-shadow: 0 3px 10px rgba(255, 107, 157, 0.25);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 8px rgba(255, 107, 157, 0.2);
 }
 
-.btn-primary:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 107, 157, 0.5);
+.btn-primary-full:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(255, 107, 157, 0.35);
 }
 
-.btn-primary:disabled {
-    opacity: 0.6;
+.btn-primary-full:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
-.btn-secondary {
-    background-color: #fff;
-    color: #c44569;
-    border: 1px solid #ffd9e8;
+.actions-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 0.6rem;
 }
 
-.btn-secondary:hover {
-    background-color: #fff0f6;
+.link-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    border: none;
+    background: transparent;
+    padding: 0;
 }
 
-.btn-outline {
-    background-color: transparent;
-    color: #c44569;
-    border: 1px dashed #f5c4d8;
+.link-action:hover {
+    color: #ff6b9d;
 }
 
-.btn-outline:hover {
-    background-color: #fff7fb;
+.link-action svg {
+    transition: transform 0.15s ease;
+}
+
+.link-action:hover svg {
+    transform: scale(1.1);
 }
 
 /* Pagination Styles */
@@ -517,10 +519,6 @@ h1 {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
-    .actions {
-        justify-content: space-between;
-    }
-
     .pagination {
         gap: 0.25rem;
     }
@@ -603,10 +601,6 @@ h1 {
 
     .products-grid {
         grid-template-columns: 1fr;
-    }
-
-    .actions {
-        gap: 0.25rem;
     }
 
     .pagination-container {

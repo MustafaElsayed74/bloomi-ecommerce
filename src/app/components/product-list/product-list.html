@@ -115,13 +115,30 @@
                 <span class="rating">⭐ {{ product.rating }}</span>
             </div>
 
-            <div class="actions">
-                <a [routerLink]="['/product', product.id]" class="btn btn-secondary">View</a>
-                <button (click)="addToCart(product)" [disabled]="product.stock === 0" class="btn btn-primary">
-                    {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
-                </button>
-                <button type="button" class="btn btn-outline" (click)="toggleWishlist(product)">
-                    {{ isInWishlist(product.id) ? '❤️ In Wishlist' : '♡ Wishlist' }}
+            <button (click)="addToCart(product)" [disabled]="product.stock === 0" class="btn-primary-full">
+                {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+            </button>
+
+            <div class="actions-secondary">
+                <a [routerLink]="['/product', product.id]" class="link-action">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                        <path
+                            d="M10 12C11.1046 12 12 11.1046 12 10C12 8.89543 11.1046 8 10 8C8.89543 8 8 8.89543 8 10C8 11.1046 8.89543 12 10 12Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M17.5 10C15.5 13.5 13 15 10 15C7 15 4.5 13.5 2.5 10C4.5 6.5 7 5 10 5C13 5 15.5 6.5 17.5 10Z"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    View Details
+                </a>
+                <button type="button" class="link-action" (click)="toggleWishlist(product)">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                        <path
+                            d="M10 17.5C10 17.5 2.5 13 2.5 7.5C2.5 5.84315 3.84315 4.5 5.5 4.5C6.88071 4.5 8.03906 5.35645 8.5 6.5C8.96094 5.35645 10.1193 4.5 11.5 4.5C13.1569 4.5 14.5 5.84315 14.5 7.5C14.5 13 10 17.5 10 17.5Z"
+                            [attr.fill]="isInWishlist(product.id) ? 'currentColor' : 'none'" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    {{ isInWishlist(product.id) ? 'Saved' : 'Save' }}
                 </button>
             </div>
         </div>
