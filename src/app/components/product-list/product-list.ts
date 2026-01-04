@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product';
 import { CartService } from '../../services/cart';
@@ -39,6 +39,7 @@ export class ProductList implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
+    private router: Router,
     private wishlistService: WishlistService,
     private authService: AuthService
   ) { }
@@ -196,6 +197,10 @@ export class ProductList implements OnInit {
         this.wishlist.push(item);
       });
     }
+  }
+
+  navigateToProduct(productId: number): void {
+    this.router.navigate(['/product', productId]);
   }
 
   // Expose Math to template
