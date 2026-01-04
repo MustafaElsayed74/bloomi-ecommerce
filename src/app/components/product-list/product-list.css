@@ -5,12 +5,25 @@
 }
 
 .header-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+.title-block {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 700;
+    color: #c44569;
 }
 
 h1 {
@@ -19,40 +32,86 @@ h1 {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin: 0;
-    font-size: 32px;
-    font-weight: 700;
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 800;
 }
 
-.filters-row {
+.subtitle {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.filters-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 12px 24px rgba(12, 13, 31, 0.06);
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.search-row {
+    display: flex;
+    gap: 0.75rem;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.category-filter,
-.sort-container {
+.input-with-icon {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0.55rem 0.85rem;
+    color: #6b7280;
+    background: #f9fafb;
+}
+
+.input-with-icon input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 14px;
+    color: #111827;
+    outline: none;
+}
+
+.filters-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 0.75rem;
+    align-items: center;
+}
+
+.category-filter,
+.sort-container {
+    display: grid;
+    gap: 0.45rem;
 }
 
 .category-filter label,
 .sort-container label {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     color: #4b5563;
 }
 
 .category-select,
 .sort-select {
-    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    padding: 0.65rem 2.5rem 0.65rem 0.9rem;
     border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border-radius: 10px;
     background: white;
     color: #1f2937;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     outline: none;
@@ -60,46 +119,79 @@ h1 {
     background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
-    min-width: 200px;
+    min-width: 180px;
 }
 
 .category-select:hover,
-.sort-select:hover {
-    border-color: #ff6b9d;
-}
-
+.sort-select:hover,
 .category-select:focus,
 .sort-select:focus {
     border-color: #ff6b9d;
-    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.12);
 }
+
+.meta-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 999px;
+    padding: 0.4rem 0.8rem;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    background: #fff;
+    cursor: default;
+}
+
+.chip.filled {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+    color: #fff;
+    border-color: transparent;
+}
+
+.chip.subtle {
+    background: #f3f4f6;
+}
+
+.chip.ghost {
+    background: transparent;
+    cursor: pointer;
+}
+
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
 }
 
 .product-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 48px rgba(255, 107, 157, 0.2);
-    border-color: rgba(255, 107, 157, 0.3);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 46px rgba(255, 107, 157, 0.18);
+    border-color: rgba(255, 107, 157, 0.35);
 }
 
 .product-image {
+    position: relative;
     width: 100%;
-    height: 200px;
-    background-color: #f5f5f5;
+    height: 210px;
+    background: radial-gradient(circle at 20% 20%, rgba(255, 107, 157, 0.14), transparent 45%), #f8fafc;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,30 +202,56 @@ h1 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.03);
+}
+
+.badge.stock {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #ef4444;
+    border-radius: 999px;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.18);
 }
 
 .product-info {
-    padding: 1.5rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
 }
 
-.product-info h3 {
-    margin: 0 0 0.5rem;
-    color: #1f2937;
-    font-weight: 600;
+.card-top h3 {
+    margin: 0;
+    color: #111827;
+    font-weight: 700;
+    font-size: 1.05rem;
 }
 
 .category {
     color: #ff6b9d;
     font-size: 0.85rem;
-    margin: 0.25rem 0;
-    font-weight: 500;
+    margin: 0.25rem 0 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .description {
-    color: #666;
-    font-size: 0.9rem;
-    margin: 0.5rem 0;
-    height: 2.5em;
+    color: #4b5563;
+    font-size: 0.93rem;
+    margin: 0;
+    line-height: 1.5;
+    max-height: 3.1em;
     overflow: hidden;
 }
 
@@ -141,14 +259,14 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 1rem 0;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e5e7eb;
 }
 
 .price {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.35rem;
+    font-weight: 800;
     background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -156,13 +274,14 @@ h1 {
 }
 
 .rating {
-    font-size: 0.9rem;
-    color: #ffc107;
+    font-size: 0.95rem;
+    color: #f59e0b;
+    font-weight: 700;
 }
 
 .actions {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.5rem;
 }
 
@@ -317,27 +436,26 @@ h1 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .header-section {
+    .filters-card {
+        padding: 0.85rem;
+        gap: 0.65rem;
+    }
+
+    .search-row {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
+        align-items: stretch;
     }
 
-    h1 {
-        font-size: 28px;
-    }
-
-    .filters-row {
+    .input-with-icon {
         width: 100%;
     }
 
-    .category-select,
-    .sort-select {
-        flex: 1;
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
-    .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .pagination {
@@ -372,22 +490,14 @@ h1 {
     }
 
     .filters-row {
-        width: 100%;
-    }
-
-    .category-filter,
-    .sort-container {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-    }
-
-    .category-select,
-    .sort-select {
-        width: 100%;
+        grid-template-columns: 1fr;
     }
 
     .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
         grid-template-columns: 1fr;
     }
 
