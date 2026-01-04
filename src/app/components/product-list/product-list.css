@@ -281,25 +281,28 @@ h1 {
 
 .actions {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0.4rem;
+    margin-top: 0.35rem;
 }
 
 .btn {
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.75rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.3s;
-    font-size: 0.9rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.2;
 }
 
 .btn-primary {
     background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
     color: white;
-    box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 3px 10px rgba(255, 107, 157, 0.25);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -313,15 +316,15 @@ h1 {
 }
 
 .btn-secondary {
-    background-color: rgba(255, 107, 157, 0.1);
+    background-color: #fff7fb;
     color: #ff6b9d;
-    border: 1px solid rgba(255, 107, 157, 0.3);
+    border: 1px solid rgba(255, 107, 157, 0.25);
 }
 
 .btn-outline {
     background-color: transparent;
     color: #ff6b9d;
-    border: 1px solid rgba(255, 107, 157, 0.3);
+    border: 1px solid rgba(255, 107, 157, 0.25);
 }
 
 /* Pagination Styles */
@@ -506,7 +509,8 @@ h1 {
     }
 
     .actions {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 0.35rem;
     }
 
     .pagination {
@@ -595,6 +599,7 @@ h1 {
 
     .actions {
         grid-template-columns: 1fr;
+        gap: 0.3rem;
     }
 
     .pagination-container {
