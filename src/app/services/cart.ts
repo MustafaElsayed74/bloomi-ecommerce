@@ -47,11 +47,33 @@ export class CartService {
   }
 
   removeFromCart(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return new Observable(observer => {
+      this.http.delete<void>(`${this.apiUrl}/${id}`).subscribe({
+        next: () => {
+          this.loadCart();
+          observer.next();
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
+    });
   }
 
   clearCart(): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/clear/${this.sessionId}`);
+    return new Observable(observer => {
+      this.http.delete<void>(`${this.apiUrl}/clear/${this.sessionId}`).subscribe({
+        next: () => {
+          this.cartSubject.next([]);
+          observer.next();
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
+    });
   }
 
   getCartTotal(): number {

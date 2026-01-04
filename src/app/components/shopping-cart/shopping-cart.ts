@@ -51,7 +51,6 @@ export class ShoppingCart implements OnInit {
       this.cartService.removeFromCart(id).subscribe({
         next: () => {
           console.log('[ShoppingCart] Item removed successfully');
-          this.loadCart();
         },
         error: (err) => {
           console.error('[ShoppingCart] Error removing item:', err);
