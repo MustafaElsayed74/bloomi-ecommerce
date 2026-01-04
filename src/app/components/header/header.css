@@ -446,12 +446,51 @@
 }
 
 @media (max-width: 768px) {
+    .navbar {
+        padding: 12px 0;
+    }
+
+    .navbar-container {
+        padding: 0 12px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .navbar-brand .logo {
+        font-size: 20px;
+        letter-spacing: 0.4px;
+    }
+
+    .search-bar {
+        flex: 1;
+        min-width: 200px;
+        padding: 8px 12px;
+        order: 3;
+        margin-top: 12px;
+    }
+
+    .search-bar input {
+        min-width: 120px;
+        font-size: 13px;
+    }
+
+    .search-bar button {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
     .navbar-menu {
-        gap: 16px;
+        gap: 12px;
+        flex: 1;
+        order: 4;
+        margin-top: 12px;
+        flex-basis: 100%;
     }
 
     .nav-link {
-        font-size: 18px;
+        font-size: 16px;
+        padding: 8px 8px;
     }
 
     .admin-badge {
@@ -466,6 +505,40 @@
     .profile-pic {
         width: 32px;
         height: 32px;
+    }
+
+    .auth-menu {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .user-info {
+        gap: 8px;
+    }
+
+    .user-profile {
+        padding: 6px 12px;
+        gap: 8px;
+    }
+
+    .logout-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .guest-auth-buttons {
+        gap: 8px;
+    }
+
+    .login-btn,
+    .signup-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+
+    .admin-cta {
+        padding: 10px 16px !important;
+        font-size: 12px !important;
     }
 }
 
@@ -490,4 +563,131 @@
 
 .cart-link:hover {
     transform: translateY(-2px) scale(1.1);
+}
+
+/* Mobile Phone Optimization (max-width: 480px) */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .navbar-container {
+        padding: 0 8px;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .navbar-brand {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar-brand .logo {
+        font-size: 18px;
+        letter-spacing: 0.3px;
+    }
+
+    .search-bar {
+        width: 100%;
+        order: 2;
+        margin: 8px 0 0 0;
+        padding: 8px 10px;
+    }
+
+    .search-bar input {
+        min-width: 100px;
+        font-size: 13px;
+        flex: 1;
+    }
+
+    .search-bar button {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .navbar-menu {
+        width: 100%;
+        order: 3;
+        margin: 8px 0 0 0;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 6px 6px;
+        gap: 4px;
+    }
+
+    .cart-badge,
+    .wishlist-badge {
+        padding: 2px 6px;
+        font-size: 10px;
+    }
+
+    .profile-pic {
+        width: 28px;
+        height: 28px;
+    }
+
+    .auth-menu {
+        width: 100%;
+        gap: 6px;
+        justify-content: space-between;
+    }
+
+    .user-info {
+        gap: 6px;
+        flex: 1;
+    }
+
+    .user-profile {
+        flex: 1;
+        min-width: 0;
+        padding: 6px 10px;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    .logout-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .guest-auth-buttons {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .login-btn,
+    .signup-btn {
+        flex: 1;
+        padding: 10px 8px;
+        font-size: 11px;
+        min-height: 36px;
+    }
+
+    .admin-cta {
+        padding: 8px 12px !important;
+        font-size: 11px !important;
+        white-space: nowrap;
+    }
+
+    .cart-link,
+    .wishlist-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cart-link svg,
+    .wishlist-link svg {
+        width: 20px;
+        height: 20px;
+    }
 }

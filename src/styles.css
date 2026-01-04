@@ -313,3 +313,415 @@ body {
         font-size: 0.8125rem;
     }
 }
+
+/* ==================== MOBILE OPTIMIZATION ==================== */
+
+/* Mobile First Approach - Tablets and Up */
+@media (max-width: 768px) {
+
+    /* General spacing */
+    body {
+        font-size: 14px;
+    }
+
+    /* Header/Navigation */
+    header {
+        padding: 10px 0 !important;
+    }
+
+    nav {
+        flex-wrap: wrap;
+    }
+
+    /* Containers */
+    .container,
+    main {
+        max-width: 100%;
+        padding: 0 12px !important;
+    }
+
+    /* Buttons */
+    button,
+    input[type="button"],
+    input[type="submit"] {
+        padding: 10px 16px;
+        font-size: 14px;
+        min-height: 44px;
+        /* Touch target */
+    }
+
+    /* Forms */
+    input,
+    textarea,
+    select {
+        padding: 12px;
+        font-size: 16px;
+        /* Prevents zoom on focus */
+        min-height: 44px;
+    }
+
+    /* Grid layouts - stack on mobile */
+    .grid,
+    [style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+
+    /* Flexbox adjustments */
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    /* Product cards */
+    .product-card,
+    .card {
+        padding: 12px;
+    }
+
+    /* Modal/Dialog */
+    .modal,
+    dialog {
+        width: 90vw !important;
+        max-width: 100% !important;
+        padding: 16px !important;
+    }
+
+    /* Typography */
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    h4,
+    h5,
+    h6 {
+        font-size: 16px;
+    }
+
+    p {
+        line-height: 1.5;
+    }
+
+    /* Tables */
+    table {
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+    }
+
+    /* Lists */
+    ul,
+    ol {
+        margin-left: 16px;
+    }
+
+    li {
+        margin-bottom: 8px;
+    }
+
+    /* Footer */
+    footer {
+        padding: 20px 0 !important;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+
+    .footer-bottom {
+        padding: 16px 12px !important;
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Margin/Padding utilities */
+    .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .p-mobile {
+        padding: 12px;
+    }
+
+    .m-mobile {
+        margin: 12px;
+    }
+}
+
+/* Small Phones (max-width: 480px) */
+@media (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+
+    /* Extra tight spacing */
+    body {
+        overflow-x: hidden;
+    }
+
+    .container,
+    main {
+        padding: 0 8px !important;
+    }
+
+    /* Headers */
+    h1 {
+        font-size: 20px;
+        line-height: 1.3;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    /* Buttons - touch-friendly */
+    button,
+    input[type="button"],
+    input[type="submit"],
+    .btn {
+        padding: 12px 12px;
+        font-size: 13px;
+        min-height: 48px;
+        width: 100%;
+    }
+
+    /* Forms */
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    /* Product grid - single column */
+    .product-grid,
+    .products-container {
+        grid-template-columns: 1fr !important;
+        gap: 8px;
+    }
+
+    .product-card {
+        padding: 8px;
+    }
+
+    /* Modals - full screen on mobile */
+    .modal,
+    dialog,
+    .modal-dialog {
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100%;
+        margin: 0 !important;
+        padding: 12px !important;
+        border-radius: 0;
+    }
+
+    .modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* Navigation */
+    nav {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    nav a,
+    nav button {
+        width: 100%;
+        text-align: left;
+        padding: 12px;
+    }
+
+    /* Dropdowns */
+    .dropdown-menu {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
+        max-width: 300px;
+    }
+
+    /* Tables - responsive */
+    table {
+        font-size: 11px;
+        display: block;
+        overflow-x: auto;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        display: block;
+        margin-bottom: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    td {
+        display: block;
+        text-align: right;
+        padding: 8px;
+        before: attr(data-label);
+        padding-left: 50%;
+        position: relative;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 8px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /* Footer - single column */
+    .footer-container {
+        grid-template-columns: 1fr !important;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-section ul {
+        text-align: center;
+    }
+
+    /* Pagination */
+    .pagination {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .pagination button,
+    .pagination a {
+        padding: 6px 8px;
+        font-size: 12px;
+        min-height: 36px;
+        min-width: 36px;
+    }
+
+    /* Sidebar - hide or full width */
+    .sidebar {
+        width: 100%;
+        position: static;
+        margin-bottom: 16px;
+    }
+
+    /* Hero section */
+    .hero,
+    .banner {
+        min-height: 200px;
+        padding: 16px;
+    }
+
+    .hero h1 {
+        font-size: 20px;
+    }
+
+    /* Cards */
+    .card {
+        margin-bottom: 12px;
+    }
+
+    /* Spacing utilities for mobile */
+    .gap-mobile {
+        gap: 8px;
+    }
+
+    .mt-mobile {
+        margin-top: 8px;
+    }
+
+    .mb-mobile {
+        margin-bottom: 8px;
+    }
+
+    .mt-lg-mobile {
+        margin-top: 16px;
+    }
+
+    .mb-lg-mobile {
+        margin-bottom: 16px;
+    }
+
+    /* Flex utilities */
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .flex-col-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .text-center-mobile {
+        text-align: center;
+    }
+
+    /* Hidden elements on mobile */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* Show only on mobile */
+    .show-mobile {
+        display: block !important;
+    }
+
+    /* Viewport meta tag handled in index.html */
+}
+
+/* Landscape mode on small phones */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        padding: 8px;
+        min-height: 40px;
+    }
+
+    .container,
+    main {
+        padding: 0 8px !important;
+    }
+}
