@@ -2,7 +2,10 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <a routerLink="/" class="logo">🌸 Bloomi Store</a>
+                <a routerLink="/" class="logo">
+                    <img src="assets/bloomi-logo.png" alt="Bloomi" class="logo-icon">
+                    <span class="logo-text">Bloomi</span>
+                </a>
             </div>
             <form class="search-bar" (ngSubmit)="onSearch()">
                 <input type="text" [(ngModel)]="searchTerm" name="search" placeholder="Search products"
@@ -11,7 +14,8 @@
             </form>
             <ul class="navbar-menu">
                 <li><a routerLink="/products" class="nav-link">🛍️ Shop</a></li>
-                <li *ngIf="(isAuthenticated$ | async)">
+                @if (isAuthenticated$ | async) {
+                <li>
                     <a routerLink="/wishlist" class="nav-link wishlist-link" title="My Wishlist">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
@@ -19,47 +23,55 @@
                                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                             </path>
                         </svg>
-                        <span class="wishlist-badge" *ngIf="wishlistItemCount > 0">{{ wishlistItemCount }}</span>
+                        @if (wishlistItemCount > 0) {
+                        <span class="wishlist-badge">{{ wishlistItemCount }}</span>
+                        }
                     </a>
                 </li>
+                }
                 <li><a routerLink="/cart" class="nav-link cart-link">
                         🛒
-                        <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+                        @if (cartItemCount > 0) {
+                        <span class="cart-badge">{{ cartItemCount }}</span>
+                        }
                     </a></li>
-                <li *ngIf="isAdmin" class="admin-link">
+                @if (isAdmin) {
+                <li class="admin-link">
                     <a routerLink="/admin" class="admin-cta">⚙️ Admin Dashboard</a>
                 </li>
+                }
                 <li class="auth-menu">
-                    <ng-container *ngIf="(isAuthenticated$ | async); else loginButton">
-                        <div class="user-info">
-                            <div class="profile-dropdown-container">
-                                <div *ngIf="currentUser$ | async as user" class="user-profile"
-                                    (click)="toggleProfileDropdown($event)">
-                                    <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
-                                    <span class="user-name">{{ user.name }}</span>
-                                    <span class="dropdown-arrow">▼</span>
-                                </div>
-                                <div class="profile-dropdown" *ngIf="showProfileDropdown">
-                                    <a routerLink="/orders" class="dropdown-item" (click)="showProfileDropdown = false">
-                                        <span class="dropdown-icon">📦</span>
-                                        Order History
-                                    </a>
-                                    <a routerLink="/profile" class="dropdown-item"
-                                        (click)="showProfileDropdown = false">
-                                        <span class="dropdown-icon">⚙️</span>
-                                        Profile Settings
-                                    </a>
-                                </div>
+                    @if (isAuthenticated$ | async) {
+                    <div class="user-info">
+                        <div class="profile-dropdown-container">
+                            @if (currentUser$ | async; as user) {
+                            <div class="user-profile" (click)="toggleProfileDropdown($event)">
+                                <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
+                                <span class="user-name">{{ user.name }}</span>
+                                <span class="dropdown-arrow">▼</span>
                             </div>
-                            <button (click)="logout()" class="logout-btn">Logout</button>
+                            }
+                            @if (showProfileDropdown) {
+                            <div class="profile-dropdown">
+                                <a routerLink="/orders" class="dropdown-item" (click)="showProfileDropdown = false">
+                                    <span class="dropdown-icon">📦</span>
+                                    Order History
+                                </a>
+                                <a routerLink="/profile" class="dropdown-item" (click)="showProfileDropdown = false">
+                                    <span class="dropdown-icon">⚙️</span>
+                                    Profile Settings
+                                </a>
+                            </div>
+                            }
                         </div>
-                    </ng-container>
-                    <ng-template #loginButton>
-                        <div class="guest-auth-buttons">
-                            <a routerLink="/login" class="login-btn">Login</a>
-                            <a routerLink="/login" class="signup-btn">Sign Up</a>
-                        </div>
-                    </ng-template>
+                        <button (click)="logout()" class="logout-btn">Logout</button>
+                    </div>
+                    } @else {
+                    <div class="guest-auth-buttons">
+                        <a routerLink="/login" class="login-btn">Login</a>
+                        <a routerLink="/login" class="signup-btn">Sign Up</a>
+                    </div>
+                    }
                 </li>
             </ul>
         </div>

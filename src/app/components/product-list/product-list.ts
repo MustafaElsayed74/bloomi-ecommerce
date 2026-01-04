@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })

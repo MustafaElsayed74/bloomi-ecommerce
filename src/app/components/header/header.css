@@ -46,22 +46,32 @@
 }
 
 .navbar-brand .logo {
-    font-size: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
     font-weight: 800;
-    background: linear-gradient(135deg, #ffffff 0%, #ffc6ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #ffffff;
     text-decoration: none;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.5px;
     transition: all 0.3s ease;
-    text-shadow: 0 2px 15px rgba(255, 107, 157, 0.5);
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
 }
 
 .navbar-brand .logo:hover {
-    transform: scale(1.1) translateY(-2px);
-    filter: drop-shadow(0 5px 20px rgba(255, 255, 255, 0.6));
+    transform: translateY(-2px);
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.5));
+}
+
+.logo-icon {
+    height: 36px;
+    width: auto;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text {
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .navbar-menu {
