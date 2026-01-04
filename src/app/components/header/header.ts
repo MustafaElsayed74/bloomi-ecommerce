@@ -21,6 +21,7 @@ export class Header implements OnInit {
   isAdmin = false;
   searchTerm = '';
   private searchDebounce: any;
+  showProfileDropdown = false;
 
   constructor(
     private cartService: CartService,
@@ -69,6 +70,22 @@ export class Header implements OnInit {
     } catch (error) {
       console.error('Error decoding token:', error);
       return false;
+    }
+  }
+
+  toggleProfileDropdown(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.showProfileDropdown = !this.showProfileDropdown;
+
+    // Close dropdown when clicking outside
+    if (this.showProfileDropdown) {
+      setTimeout(() => {
+        document.addEventListener('click', () => {
+          this.showProfileDropdown = false;
+        }, { once: true });
+      }, 0);
     }
   }
 

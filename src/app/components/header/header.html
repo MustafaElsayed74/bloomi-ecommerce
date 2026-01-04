@@ -32,10 +32,25 @@
                 <li class="auth-menu">
                     <ng-container *ngIf="(isAuthenticated$ | async); else loginButton">
                         <div class="user-info">
-                            <a routerLink="/profile" *ngIf="currentUser$ | async as user" class="user-profile">
-                                <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
-                                <span class="user-name">{{ user.name }}</span>
-                            </a>
+                            <div class="profile-dropdown-container">
+                                <div *ngIf="currentUser$ | async as user" class="user-profile"
+                                    (click)="toggleProfileDropdown($event)">
+                                    <img [src]="user.profilePicture" [alt]="user.name" class="profile-pic">
+                                    <span class="user-name">{{ user.name }}</span>
+                                    <span class="dropdown-arrow">▼</span>
+                                </div>
+                                <div class="profile-dropdown" *ngIf="showProfileDropdown">
+                                    <a routerLink="/orders" class="dropdown-item" (click)="showProfileDropdown = false">
+                                        <span class="dropdown-icon">📦</span>
+                                        Order History
+                                    </a>
+                                    <a routerLink="/profile" class="dropdown-item"
+                                        (click)="showProfileDropdown = false">
+                                        <span class="dropdown-icon">⚙️</span>
+                                        Profile Settings
+                                    </a>
+                                </div>
+                            </div>
                             <button (click)="logout()" class="logout-btn">Logout</button>
                         </div>
                     </ng-container>

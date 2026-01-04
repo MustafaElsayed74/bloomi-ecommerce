@@ -1,0 +1,61 @@
+<div class="container">
+    <h1>Order History</h1>
+
+    <div *ngIf="loading" class="loading">
+        <p>Loading your orders...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!loading && orders.length === 0 && !errorMessage" class="empty-orders">
+        <p>You haven't placed any orders yet</p>
+        <a routerLink="/products" class="btn btn-primary">Start Shopping</a>
+    </div>
+
+    <div *ngIf="!loading && orders.length > 0" class="orders-list">
+        <div *ngFor="let order of orders" class="order-card">
+            <div class="order-header">
+                <div class="order-info">
+                    <h3>Order #{{ order.orderNumber || order.id }}</h3>
+                    <p class="order-date">{{ formatDate(order.createdAt) }}</p>
+                </div>
+                <div class="order-status">
+                    <span [class]="getStatusClass(order.status)" class="status-badge">
+                        {{ getStatusLabel(order.status) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="order-details">
+                <div class="order-section">
+                    <p class="label">Shipping Address:</p>
+                    <p class="value">{{ order.shippingAddress }}</p>
+                </div>
+
+                <div class="order-items" *ngIf="order.items && order.items.length > 0">
+                    <p class="label">Items ({{ order.items.length }}):</p>
+                    <div class="items-list">
+                        <div *ngFor="let item of order.items" class="order-item">
+                            <span class="item-name">{{ item.productName }}</span>
+                            <span class="item-quantity">x{{ item.quantity }}</span>
+                            <span class="item-price">EGP {{ item.price.toFixed(2) }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-total">
+                    <div *ngIf="order.discountAmount && order.discountAmount > 0" class="discount-info">
+                        <span class="label">Discount Applied:</span>
+                        <span class="value">- EGP {{ order.discountAmount.toFixed(2) }}</span>
+                    </div>
+                    <div class="total-amount">
+                        <span class="label">Total:</span>
+                        <span class="value">EGP {{ order.totalAmount.toFixed(2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ import { ShoppingCart } from './components/shopping-cart/shopping-cart';
 import { Checkout } from './components/checkout/checkout';
 import { LoginComponent } from './components/login/login';
 import { ProfileSettings } from './components/profile-settings/profile-settings';
+import { OrderHistory } from './components/order-history/order-history';
 import { AuthGuard } from './services/auth-guard';
 import { AdminGuard } from './services/admin-guard';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard';
@@ -30,6 +31,7 @@ export const routes: Routes = [
     { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
     { path: 'checkout', component: Checkout, canActivate: [AuthGuard] },
     { path: 'profile', component: ProfileSettings, canActivate: [AuthGuard] },
+    { path: 'orders', component: OrderHistory, canActivate: [AuthGuard] },
     { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard] },
     { path: 'admin/products', component: ProductManagementComponent, canActivate: [AdminGuard] },
     { path: 'admin/users', component: UserManagementComponent, canActivate: [AdminGuard] },

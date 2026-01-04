@@ -20,6 +20,8 @@ export interface CartItem {
 
 export interface Order {
     id?: number;
+    orderNumber?: string;
+    userId?: number;
     customerName: string;
     customerEmail: string;
     shippingAddress: string;
